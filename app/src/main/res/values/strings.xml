@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WhatsOnSale</string>
+    <string name="business">Business</string>
+    <string name="customer">Customer</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Log In</string>
+    <string name="register">Register</string>
+</resources>
