@@ -29,8 +29,8 @@ public class SimpleDialog extends DialogFragment {
     }
 
     public SimpleDialog(String dialogText, String positiveButtonText, String negativeButtonText,
-                        Context applicationContext, Class<?> positiveClass, String[] extraKeys,
-                        String[] extraValues) {
+                             Context applicationContext, Class<?> positiveClass, String[] extraKeys,
+                             String[] extraValues) {
         this.dialogText = dialogText;
         this.positiveButtonText = positiveButtonText;
         this.negativeButtonText = negativeButtonText;

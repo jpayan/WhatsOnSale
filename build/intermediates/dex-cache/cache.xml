@@ -7,8 +7,17 @@
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
-        sha1="0846cefef8ea5cfceb5e08bffba86d610b2727e0">
+        sha1="ef57d0699816bbefb6c205f09e6cf96c7f0648c2">
         <dex dex="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_e99241abac66bc3fb0588cff1569e0841d9a10f0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jorge.payan/.android/build-cache/f0bd281bf29c41e90b0f24a3889476b91f769a94/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c4f45092eee6cdf1a5dbd597b2b6819be652ce2e">
+        <dex dex="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_0cee5eb5bd368abb4b74d49508c0fa775ad7d51e/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -18,6 +27,24 @@
         revision="26.0.2"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
         <dex dex="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1d9b03305d123b23310eb50483bb123e23e89d49/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jorge.payan/.android/build-cache/2b8c2c77bbcd74904c05ad854962204f26efaea8/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cddcd0fb93bc70e27325f2f715b2710332004ebb">
+        <dex dex="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_8ba5d1b805508d7540921dd68ff5c6af0ca34c34/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/jorge.payan/.android/build-cache/4a8ad5300c5c865c6b379d77f84ee30ea7141294/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6a022bf00ccd0948a8180c505e8e458bbddd43a6">
+        <dex dex="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_184bc8fa06e7db58d4f606cbcb22e3c6b1f0afbf/classes.dex" />
     </item>
 
 </items>
