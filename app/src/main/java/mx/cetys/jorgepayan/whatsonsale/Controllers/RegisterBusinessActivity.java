@@ -36,6 +36,9 @@ public class RegisterBusinessActivity extends AppCompatActivity {
         String email = fromMain.getStringExtra(MainActivity.MAIN_EMAIL);
         String password = fromMain.getStringExtra(MainActivity.MAIN_PASS);
 
+        final String businessVal =
+            getApplicationContext().getResources().getString(R.string.business);
+
         editTextEmail.setText(email);
         editTextPassword.setText(password);
 
@@ -47,19 +50,28 @@ public class RegisterBusinessActivity extends AppCompatActivity {
                 String businessName = editTextBusinessName.getText().toString();
                 String hqAddress = editTextHQAddress.getText().toString();
 
-                long userId = userHelper.addUser(finalEmail, finalPass, "Business");
-                try {
-                    long bussinessId = businessHelper.addBusiness(userId, businessName, hqAddress);
-                    SimpleDialog registerDialog =
-                            new SimpleDialog("You have successfully registered your "
-                                    + R.string.business + " user.",
-                                    "Ok", null, getApplicationContext(), BusinessHomeActivity.class,
-                                    new String[]{REGISTER_SUCCESS},
-                                    new String[]{String.valueOf(bussinessId)});
+                if (userHelper.userExists(finalEmail, "Business")) {
+                    final SimpleDialog existingUserDialog =
+                        new SimpleDialog("A user with this email has already been registered." +
+                            "\nIf the user registered with that email belongs to you, press the " +
+                            "login button.", "Ok");
                     FragmentManager fm = getSupportFragmentManager();
-                    registerDialog.show(fm, "Alert Dialog Fragment");
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    existingUserDialog.show(fm, "Alert Dialog Fragment");
+                } else {
+                    userHelper.addUser(finalEmail, finalPass, "Business");
+                    try {
+                        businessHelper.addBusiness(finalEmail, businessName, hqAddress);
+                        SimpleDialog registerDialog =
+                            new SimpleDialog("You have successfully registered your "
+                                + businessVal + " user.",
+                                "Ok", null, getApplicationContext(), BusinessHomeActivity.class,
+                                new String[]{REGISTER_SUCCESS},
+                                new String[]{finalEmail});
+                        FragmentManager fm = getSupportFragmentManager();
+                        registerDialog.show(fm, "Alert Dialog Fragment");
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
             }
         });

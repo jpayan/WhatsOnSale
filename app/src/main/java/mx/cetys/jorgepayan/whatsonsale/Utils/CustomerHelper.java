@@ -18,7 +18,7 @@ public class CustomerHelper {
 
     private String[] CUSTOMER_TABLE_COLUMNS = {
             DBUtils.CUSTOMER_ID,
-            DBUtils.CUSTOMER_USER_ID,
+            DBUtils.CUSTOMER_USER_EMAIL,
             DBUtils.CUSTOMER_NAME,
             DBUtils.CUSTOMER_AGE,
             DBUtils.CUSTOMER_GENDER
@@ -49,13 +49,14 @@ public class CustomerHelper {
         return customer;
     }
 
-    public long addCustomer(String name, int age, String gender) {
+    public long addCustomer(String userEmail, String name, int age, String gender) {
         open();
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.CUSTOMER_NAME, name);
         values.put(DBUtils.CUSTOMER_AGE, age);
         values.put(DBUtils.CUSTOMER_GENDER, gender);
+        values.put(DBUtils.CUSTOMER_USER_EMAIL, userEmail);
 
         long customerId = database.insert(DBUtils.CUSTOMER_TABLE_NAME, null, values);
         close();
@@ -67,7 +68,7 @@ public class CustomerHelper {
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.CUSTOMER_ID, customer.getCustomerId());
-        values.put(DBUtils.CUSTOMER_USER_ID, customer.getUserId());
+        values.put(DBUtils.CUSTOMER_USER_EMAIL, customer.getUserEmail());
         values.put(DBUtils.CUSTOMER_NAME, customer.getName());
         values.put(DBUtils.CUSTOMER_AGE, customer.getAge());
         values.put(DBUtils.CUSTOMER_GENDER, customer.getGender());
@@ -92,11 +93,11 @@ public class CustomerHelper {
 
     private Customer parsecustomer(Cursor cursor) {
         int customerId = cursor.getInt(cursor.getColumnIndex(DBUtils.CUSTOMER_ID));
-        int userId = cursor.getInt(cursor.getColumnIndex(DBUtils.CUSTOMER_USER_ID));
+        String userEmail = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_USER_EMAIL));
         String name = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_NAME));
         int age = cursor.getInt(cursor.getColumnIndex(DBUtils.CUSTOMER_AGE));
         String gender = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_GENDER));
 
-        return new Customer(customerId, userId, name, age, gender);
+        return new Customer(customerId, userEmail, name, age, gender);
     }
 }

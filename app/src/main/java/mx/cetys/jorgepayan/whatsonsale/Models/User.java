@@ -5,24 +5,14 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
  */
 
 public class User {
-    private int userId;
     private String email;
     private String password;
     private String type;
 
-    public User(int userId, String email, String password, String type) {
-        this.userId = userId;
+    public User(String email, String password, String type) {
         this.email = email;
         this.password = password;
         this.type = type;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getEmail() {

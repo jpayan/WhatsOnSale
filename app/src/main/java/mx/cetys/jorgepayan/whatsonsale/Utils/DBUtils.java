@@ -10,20 +10,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBUtils extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "WhatsOnSale.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     /******************************************** USER ********************************************/
 
     public static final String USER_TABLE_NAME = "user";
-    public static final String USER_ID = "user_id";
+//    public static final String USER_ID = "user_id";
     public static final String USER_EMAIL = "email";
     public static final String USER_PASSWORD = "password";
     public static final String USER_TYPE = "type";
 
     public static final String CREATE_USER_TABLE =
         "CREATE TABLE " + USER_TABLE_NAME + "(" +
-            USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            USER_EMAIL + " TEXT NOT NULL, " +
+//            USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            USER_EMAIL + " TEXT PRIMARY KEY, " +
             USER_PASSWORD + " TEXT NOT NULL, " +
             USER_TYPE + " TEXT NOT NULL" +
         ");";
@@ -44,7 +44,7 @@ public class DBUtils extends SQLiteOpenHelper {
 
     public static final String BUSINESS_TABLE_NAME = "business";
     public static final String BUSINESS_ID = "business_id";
-    public static final String BUSINESS_USER_ID = "user_id";
+    public static final String BUSINESS_USER_EMAIL = "user_email";
     public static final String BUSINESS_NAME = "business_name";
     public static final String BUSINESS_HQ_ADDRESS = "hq_address";
 
@@ -53,16 +53,16 @@ public class DBUtils extends SQLiteOpenHelper {
             BUSINESS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             BUSINESS_NAME + " TEXT NOT NULL, " +
             BUSINESS_HQ_ADDRESS + " TEXT NOT NULL, " +
-            BUSINESS_USER_ID + " INTEGER NOT NULL, " +
-                "FOREIGN KEY (" + BUSINESS_USER_ID + ") REFERENCES " +
-                USER_TABLE_NAME + "(" + USER_ID + ") " +
+            BUSINESS_USER_EMAIL + " TEXT NOT NULL, " +
+                "FOREIGN KEY (" + BUSINESS_USER_EMAIL + ") REFERENCES " +
+                USER_TABLE_NAME + "(" + USER_EMAIL + ") " +
         ");";
 
     /****************************************** CUSTOMER ******************************************/
 
     public static final String CUSTOMER_TABLE_NAME = "customer";
     public static final String CUSTOMER_ID = "customer_id";
-    public static final String CUSTOMER_USER_ID = "user_id";
+    public static final String CUSTOMER_USER_EMAIL = "user_email";
     public static final String CUSTOMER_NAME = "name";
     public static final String CUSTOMER_AGE = "age";
     public static final String CUSTOMER_GENDER = "gender";
@@ -73,9 +73,9 @@ public class DBUtils extends SQLiteOpenHelper {
             CUSTOMER_NAME + " TEXT NOT NULL, " +
             CUSTOMER_AGE + " TEXT NOT NULL, " +
             CUSTOMER_GENDER + " TEXT, " +
-            CUSTOMER_USER_ID + " INTEGER NOT NULL, " +
-                "FOREIGN KEY (" + CUSTOMER_USER_ID + ") REFERENCES " +
-                USER_TABLE_NAME + "(" + USER_ID + ") " +
+            CUSTOMER_USER_EMAIL + " TEXT NOT NULL, " +
+                "FOREIGN KEY (" + CUSTOMER_USER_EMAIL + ") REFERENCES " +
+                USER_TABLE_NAME + "(" + USER_EMAIL + ") " +
         ");";
 
     /****************************************** LOCATION ******************************************/
@@ -187,15 +187,15 @@ public class DBUtils extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_USER_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_CATEGORY_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_BUSINESS_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_CUSTOMER_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_LOCATION_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_SALE_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_SALE_LOCATION_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_CUSTOMER_CATEGORY_TABLE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CREATE_SALE_REVIEW_TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + BUSINESS_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CUSTOMER_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LOCATION_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SALE_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SALE_LOCATION_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CUSTOMER_CATEGORY_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SALE_REVIEW_TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 }

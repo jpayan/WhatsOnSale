@@ -2,15 +2,17 @@ package mx.cetys.jorgepayan.whatsonsale.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import mx.cetys.jorgepayan.whatsonsale.R;
+import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
+import mx.cetys.jorgepayan.whatsonsale.Utils.UserHelper;
 
 public class MainActivity extends AppCompatActivity {
     public static final String MAIN_EMAIL = "MAIN EMAIL";
@@ -28,18 +30,54 @@ public class MainActivity extends AppCompatActivity {
         final RadioButton radioButtonBusiness =
                 (RadioButton) findViewById(R.id.radio_button_business);
 
+        final UserHelper userHelper = new UserHelper(this);
+
+        final SimpleDialog emptyFieldsDialog =
+            new SimpleDialog("Fill up all the fields before logging in or registering.", "Ok");
+        final SimpleDialog incorrectCredentialsDialog =
+            new SimpleDialog("Incorrect email or password.", "Ok");
+        final SimpleDialog unexistingUserDialog =
+            new SimpleDialog("No user with the specified email is registered.\nVerify the type " +
+                "of user selected.\nIf this is your first time using the app, press the " +
+                "register button.", "Ok");
+        final SimpleDialog existingUserDialog =
+            new SimpleDialog("A user with this email has already been registered.\nIf the user " +
+                "registered with that email belongs to you, press the login button.", "Ok");
+
+        final FragmentManager fm = getSupportFragmentManager();
+
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (radioButtonBusiness.isChecked()) {
+                String email = editTextEmail.getText().toString();
+                String password = editTextPassword.getText().toString();
 
-                    goToIntent(getApplicationContext(), BusinessHomeActivity.class,
-                               new String[]{editTextEmail.getText().toString(),
-                                            editTextPassword.getText().toString()});
+                if (email.length() == 0 || password.length() == 0) {
+                    emptyFieldsDialog.show(fm, "Alert Dialog Fragment");
                 } else {
-                    goToIntent(getApplicationContext(), CustomerHomeActivity.class,
-                            new String[]{editTextEmail.getText().toString(),
-                                    editTextPassword.getText().toString()});
+                    if (radioButtonBusiness.isChecked()) {
+                        if (userHelper.userExists(email, "Business")) {
+                            if (userHelper.validateCredentials(email, password)) {
+                                goToIntent(getApplicationContext(), BusinessHomeActivity.class,
+                                    new String[]{email, password});
+                            } else {
+                                incorrectCredentialsDialog.show(fm, "Alert Dialog Fragment");
+                            }
+                        } else {
+                            unexistingUserDialog.show(fm, "Alert Dialog Fragment");
+                        }
+                    } else {
+                        if (userHelper.userExists(email, "Customer")) {
+                            if (userHelper.validateCredentials(email, password)) {
+                                goToIntent(getApplicationContext(), CustomerHomeActivity.class,
+                                        new String[]{email, password});
+                            } else {
+                                incorrectCredentialsDialog.show(fm, "Alert Dialog Fragment");
+                            }
+                        } else {
+                            unexistingUserDialog.show(fm, "Alert Dialog Fragment");
+                        }
+                    }
                 }
             }
         });
@@ -47,14 +85,29 @@ public class MainActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (radioButtonBusiness.isChecked()) {
-                    goToIntent(getApplicationContext(), RegisterBusinessActivity.class,
-                            new String[]{editTextEmail.getText().toString(),
-                                    editTextPassword.getText().toString()});
+                String email = editTextEmail.getText().toString();
+                String password = editTextPassword.getText().toString();
+
+                if (email.length() == 0 || password.length() == 0) {
+                    emptyFieldsDialog.show(fm, "Alert Dialog Fragment");
                 } else {
-                    goToIntent(getApplicationContext(), RegisterCustomerActivity.class,
-                            new String[]{editTextEmail.getText().toString(),
+                    if (radioButtonBusiness.isChecked()) {
+                        if (userHelper.userExists(email, "Business")) {
+                            existingUserDialog.show(fm, "Alert Dialog Fragment");
+                        } else {
+                            goToIntent(getApplicationContext(), RegisterBusinessActivity.class,
+                                new String[]{editTextEmail.getText().toString(),
                                     editTextPassword.getText().toString()});
+                        }
+                    } else {
+                        if (userHelper.userExists(email, "Customer")) {
+                            existingUserDialog.show(fm, "Alert Dialog Fragment");
+                        } else {
+                            goToIntent(getApplicationContext(), RegisterCustomerActivity.class,
+                                new String[]{editTextEmail.getText().toString(),
+                                    editTextPassword.getText().toString()});
+                        }
+                    }
                 }
             }
         });

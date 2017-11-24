@@ -6,13 +6,13 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
 
 public class Business {
     private int businessId;
-    private int userId;
+    private String userEmail;
     private String businessName;
     private String hqAddress;
 
-    public Business(int businessId, int userId, String businessName, String hqAddress) {
+    public Business(int businessId, String userEmail, String businessName, String hqAddress) {
         this.businessId = businessId;
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.businessName = businessName;
         this.hqAddress = hqAddress;
     }
@@ -25,12 +25,12 @@ public class Business {
         this.businessId = businessId;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getuserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setuserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getBusinessName() {

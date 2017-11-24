@@ -18,7 +18,7 @@ public class BusinessHelper {
 
     private String[] BUSINESS_TABLE_COLUMNS = {
             DBUtils.BUSINESS_ID,
-            DBUtils.BUSINESS_USER_ID,
+            DBUtils.BUSINESS_USER_EMAIL,
             DBUtils.BUSINESS_NAME,
             DBUtils.BUSINESS_HQ_ADDRESS
     };
@@ -47,12 +47,12 @@ public class BusinessHelper {
         return user;
     }
 
-    public long addBusiness(long businessUserId, String businessName,
+    public long addBusiness(String businessUserEmail, String businessName,
                             String hqAddress) {
         open();
         ContentValues values = new ContentValues();
 
-        values.put(DBUtils.BUSINESS_USER_ID, businessUserId);
+        values.put(DBUtils.BUSINESS_USER_EMAIL, businessUserEmail);
         values.put(DBUtils.BUSINESS_NAME, businessName);
         values.put(DBUtils.BUSINESS_HQ_ADDRESS, hqAddress);
 
@@ -67,12 +67,12 @@ public class BusinessHelper {
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.BUSINESS_ID, business.getBusinessId());
-        values.put(DBUtils.BUSINESS_USER_ID, business.getUserId());
+        values.put(DBUtils.BUSINESS_USER_EMAIL, business.getuserEmail());
         values.put(DBUtils.BUSINESS_NAME, business.getBusinessName());
         values.put(DBUtils.BUSINESS_HQ_ADDRESS, business.getHqAddress());
 
         int response = database.update(DBUtils.BUSINESS_TABLE_NAME, values, DBUtils.BUSINESS_ID + " = " +
-                        business.getUserId(), null);
+            business.getuserEmail(), null);
         close();
         return response;
     }
@@ -91,10 +91,12 @@ public class BusinessHelper {
 
     private Business parseBusiness(Cursor cursor) {
         int businessId = cursor.getInt(cursor.getColumnIndex(DBUtils.BUSINESS_ID));
-        int businessUserId = cursor.getInt(cursor.getColumnIndex(DBUtils.BUSINESS_USER_ID));
+        String businessUserEmail =
+            cursor.getString(cursor.getColumnIndex(DBUtils.BUSINESS_USER_EMAIL));
         String businessName = cursor.getString(cursor.getColumnIndex(DBUtils.BUSINESS_NAME));
-        String businessHQAddress = cursor.getString(cursor.getColumnIndex(DBUtils.BUSINESS_HQ_ADDRESS));
+        String businessHQAddress =
+            cursor.getString(cursor.getColumnIndex(DBUtils.BUSINESS_HQ_ADDRESS));
 
-        return new Business(businessId, businessUserId, businessName, businessHQAddress);
+        return new Business(businessId, businessUserEmail, businessName, businessHQAddress);
     }
 }

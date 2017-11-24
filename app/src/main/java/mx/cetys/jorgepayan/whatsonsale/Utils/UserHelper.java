@@ -19,7 +19,6 @@ public class UserHelper {
     private SQLiteDatabase database;
 
     private String[] USER_TABLE_COLUMNS = {
-            DBUtils.USER_ID,
             DBUtils.USER_EMAIL,
             DBUtils.USER_PASSWORD,
             DBUtils.USER_TYPE
@@ -37,17 +36,45 @@ public class UserHelper {
         dbHelper.close();
     }
 
-    public User getUser(String userId) {
+    public ArrayList<User> getUser(String userEmail) {
+        ArrayList<User> userArray = new ArrayList<User>();
+
         open();
         Cursor cursor = database.query(DBUtils.USER_TABLE_NAME, USER_TABLE_COLUMNS,
-                DBUtils.USER_ID + " = " + userId, null, null, null, null);
+                DBUtils.USER_EMAIL + " = '" + userEmail + "'", null, null, null, null);
 
-        cursor.moveToFirst();
-        User user = parseUser(cursor);
-        cursor.close();
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            userArray.add(parseUser(cursor));
+            cursor.close();
+        }
         close();
 
-        return user;
+        return userArray;
+    }
+
+    public boolean userExists(String email, String type) {
+        boolean exists = false;
+        ArrayList<User> userArray = getUser(email);
+        if (userArray.size() > 0) {
+            User user = userArray.get(0);
+            if (user.getType().equals(type)) {
+                exists = true;
+            }
+        }
+        return exists;
+    }
+
+    public boolean validateCredentials(String email, String password) {
+        boolean validUser = false;
+        ArrayList<User> userArray = getUser(email);
+        if (userArray.size() > 0) {
+            User user = userArray.get(0);
+            if (user.getPassword().equals(password)) {
+                validUser = true;
+            }
+        }
+        return validUser;
     }
 
     public long addUser(String email, String password, String type) {
@@ -68,20 +95,19 @@ public class UserHelper {
         open();
         ContentValues values = new ContentValues();
 
-        values.put(DBUtils.USER_ID, user.getUserId());
         values.put(DBUtils.USER_EMAIL, user.getEmail());
         values.put(DBUtils.USER_PASSWORD, user.getPassword());
         values.put(DBUtils.USER_TYPE, user.getType());
 
-        int response = database.update(DBUtils.USER_TABLE_NAME, values, DBUtils.USER_ID + " = " + user.getUserId(),
-                        null);
+        int response = database.update(DBUtils.USER_TABLE_NAME, values, DBUtils.USER_EMAIL + " = '"
+                                       + user.getEmail() + "'", null);
         close();
         return response;
     }
 
-    public void deleteUser(int userId) {
+    public void deleteUser(String userEmail) {
         open();
-        database.delete(DBUtils.USER_TABLE_NAME, DBUtils.USER_ID + " = " + userId, null);
+        database.delete(DBUtils.USER_TABLE_NAME, DBUtils.USER_EMAIL + " = '" + userEmail + "'", null);
         close();
     }
 
@@ -92,11 +118,10 @@ public class UserHelper {
     }
 
     private User parseUser(Cursor cursor) {
-        int userId = cursor.getInt(cursor.getColumnIndex(DBUtils.USER_ID));
         String email = cursor.getString(cursor.getColumnIndex(DBUtils.USER_EMAIL));
         String password = cursor.getString(cursor.getColumnIndex(DBUtils.USER_PASSWORD));
         String type = cursor.getString(cursor.getColumnIndex(DBUtils.USER_TYPE));
 
-        return new User(userId, email, password, type);
+        return new User(email, password, type);
     }
 }

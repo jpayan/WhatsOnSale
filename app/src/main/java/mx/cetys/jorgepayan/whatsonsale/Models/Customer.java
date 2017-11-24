@@ -6,14 +6,14 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
 
 public class Customer {
     private int customerId;
-    private int userId;
+    private String userEmail;
     private String name;
     private int age;
     private String gender;
 
-    public Customer(int customerId, int userId, String name, int age, String gender) {
+    public Customer(int customerId, String userEmail, String name, int age, String gender) {
         this.customerId = customerId;
-        this.userId = userId;
+        this.userEmail = userEmail;
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -27,12 +27,12 @@ public class Customer {
         this.customerId = customerId;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getName() {

@@ -40,16 +40,32 @@ public class SimpleDialog extends DialogFragment {
         this.extraValues = extraValues;
     }
 
+    public SimpleDialog(String dialogText, String positiveButtonText) {
+        this.dialogText = dialogText;
+        this.positiveButtonText = positiveButtonText;
+        this.negativeButtonText = null;
+        this.applicationContext = null;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         if (negativeButtonText == null || negativeButtonText.length() == 0) {
-            builder.setMessage(dialogText)
-                .setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        goToIntent(applicationContext, positiveClass, extraKeys, extraValues);
-                    }
-                });
+            if(applicationContext == null) {
+                builder.setMessage(dialogText)
+                    .setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            } else {
+                builder.setMessage(dialogText)
+                    .setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            goToIntent(applicationContext, positiveClass, extraKeys, extraValues);
+                        }
+                    });
+            }
         } else {
             builder.setMessage(dialogText)
                 .setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {

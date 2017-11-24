@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import mx.cetys.jorgepayan.whatsonsale.Models.Customer;
 import mx.cetys.jorgepayan.whatsonsale.R;
 import mx.cetys.jorgepayan.whatsonsale.Utils.CustomerHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
@@ -40,32 +41,44 @@ public class RegisterCustomerActivity extends AppCompatActivity {
         userHelper = new UserHelper(getApplicationContext());
         customerHelper = new CustomerHelper(getApplicationContext());
 
+        final String customerVal =
+                getApplicationContext().getResources().getString(R.string.customer);
+
         editTextEmail.setText(email);
         editTextPassword.setText(password);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String finalEmail = editTextEmail.getText().toString();
-                String finalPass = editTextPassword.getText().toString();
-                String name = editTextCustomerName.getText().toString();
-                int age = Integer.parseInt(editTextCustomerAge.getText().toString());
-                String gender = editTextCustomerGender.getText().toString();
+            String finalEmail = editTextEmail.getText().toString();
+            String finalPass = editTextPassword.getText().toString();
+            String name = editTextCustomerName.getText().toString();
+            int age = Integer.parseInt(editTextCustomerAge.getText().toString());
+            String gender = editTextCustomerGender.getText().toString();
 
-                long userId = userHelper.addUser(finalEmail, finalPass, "Customer");
+            if (userHelper.userExists(finalEmail, "Customer")) {
+                final SimpleDialog existingUserDialog =
+                    new SimpleDialog("A user with this email has already been registered." +
+                        "\nIf the user registered with that email belongs to you, press the " +
+                        "login button.", "Ok");
+                FragmentManager fm = getSupportFragmentManager();
+                existingUserDialog.show(fm, "Alert Dialog Fragment");
+            } else {
+                userHelper.addUser(finalEmail, finalPass, "Customer");
                 try {
-                    long customerId = customerHelper.addCustomer(name, age, gender);
+                    customerHelper.addCustomer(finalEmail, name, age, gender);
                     SimpleDialog registerDialog =
-                            new SimpleDialog("You have successfully registered your" +
-                                    R.string.customer + " user.",
-                                    "Ok", null, getApplicationContext(), BusinessHomeActivity.class,
-                                    new String[]{REGISTER_SUCCESS},
-                                    new String[]{String.valueOf(customerId)});
+                        new SimpleDialog("You have successfully registered your " +
+                            customerVal + " user.",
+                            "Ok", null, getApplicationContext(), CustomerHomeActivity.class,
+                            new String[]{REGISTER_SUCCESS},
+                            new String[]{finalEmail});
                     FragmentManager fm = getSupportFragmentManager();
                     registerDialog.show(fm, "Alert Dialog Fragment");
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
+            }
             }
         });
     }
