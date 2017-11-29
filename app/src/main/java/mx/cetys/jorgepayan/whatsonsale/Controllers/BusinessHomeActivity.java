@@ -1,5 +1,6 @@
 package mx.cetys.jorgepayan.whatsonsale.Controllers;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -8,14 +9,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import mx.cetys.jorgepayan.whatsonsale.Models.Business;
 import mx.cetys.jorgepayan.whatsonsale.R;
+import mx.cetys.jorgepayan.whatsonsale.Utils.BusinessHelper;
 
 public class BusinessHomeActivity extends AppCompatActivity {
+
+    public static Business currentBusiness;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_home);
+
+        final BusinessHelper businessHelper = new BusinessHelper(getApplicationContext());
+        Intent fromMain = getIntent();
+        String email = fromMain.getStringExtra(MainActivity.MAIN_EMAIL);
+
+        currentBusiness = businessHelper.getBusinessByEmail(email);
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
 

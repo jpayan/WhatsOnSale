@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.CustomerHomeActivity">
 
+    <fragment
+        android:id="@+id/map"
+        android:name="mx.cetys.jorgepayan.whatsonsale.Controllers.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </android.support.constraint.ConstraintLayout>

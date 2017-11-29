@@ -47,6 +47,18 @@ public class BusinessHelper {
         return user;
     }
 
+    public Business getBusinessByEmail(String userEmail) {
+        open();
+        Cursor cursor = database.query(DBUtils.BUSINESS_TABLE_NAME, BUSINESS_TABLE_COLUMNS,
+                DBUtils.BUSINESS_USER_EMAIL + " = '" + userEmail + "'", null, null, null, null);
+
+        cursor.moveToFirst();
+        Business user = parseBusiness(cursor);
+        cursor.close();
+        close();
+        return user;
+    }
+
     public long addBusiness(String businessUserEmail, String businessName,
                             String hqAddress) {
         open();

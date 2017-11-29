@@ -65,7 +65,7 @@ public class RegisterBusinessActivity extends AppCompatActivity {
                             new SimpleDialog("You have successfully registered your "
                                 + businessVal + " user.",
                                 "Ok", null, getApplicationContext(), BusinessHomeActivity.class,
-                                new String[]{REGISTER_SUCCESS},
+                                new String[]{MainActivity.MAIN_EMAIL},
                                 new String[]{finalEmail});
                         FragmentManager fm = getSupportFragmentManager();
                         registerDialog.show(fm, "Alert Dialog Fragment");
