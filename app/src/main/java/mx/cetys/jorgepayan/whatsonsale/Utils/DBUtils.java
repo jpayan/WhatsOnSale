@@ -10,19 +10,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBUtils extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "WhatsOnSale.db";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 5;
 
     /******************************************** USER ********************************************/
 
     public static final String USER_TABLE_NAME = "user";
-//    public static final String USER_ID = "user_id";
     public static final String USER_EMAIL = "email";
     public static final String USER_PASSWORD = "password";
     public static final String USER_TYPE = "type";
 
     public static final String CREATE_USER_TABLE =
         "CREATE TABLE " + USER_TABLE_NAME + "(" +
-//            USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             USER_EMAIL + " TEXT PRIMARY KEY, " +
             USER_PASSWORD + " TEXT NOT NULL, " +
             USER_TYPE + " TEXT NOT NULL" +
@@ -31,13 +29,11 @@ public class DBUtils extends SQLiteOpenHelper {
     /****************************************** CATEGORY ******************************************/
 
     public static final String CATEGORY_TABLE_NAME = "category";
-    public static final String CATEGORY_ID = "category_id";
     public static final String CATEGORY_NAME = "name";
 
     public static final String CREATE_CATEGORY_TABLE =
         "CREATE TABLE " + CATEGORY_TABLE_NAME + "(" +
-            CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            CATEGORY_NAME + " TEXT NOT NULL" +
+            CATEGORY_NAME + " TEXT PRIMARY KEY" +
         ");";
 
     /****************************************** BUSINESS ******************************************/
@@ -53,9 +49,7 @@ public class DBUtils extends SQLiteOpenHelper {
             BUSINESS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             BUSINESS_NAME + " TEXT NOT NULL, " +
             BUSINESS_HQ_ADDRESS + " TEXT NOT NULL, " +
-            BUSINESS_USER_EMAIL + " TEXT NOT NULL, " +
-                "FOREIGN KEY (" + BUSINESS_USER_EMAIL + ") REFERENCES " +
-                USER_TABLE_NAME + "(" + USER_EMAIL + ") " +
+            BUSINESS_USER_EMAIL + " TEXT NOT NULL" +
         ");";
 
     /****************************************** CUSTOMER ******************************************/
@@ -73,15 +67,14 @@ public class DBUtils extends SQLiteOpenHelper {
             CUSTOMER_NAME + " TEXT NOT NULL, " +
             CUSTOMER_AGE + " TEXT NOT NULL, " +
             CUSTOMER_GENDER + " TEXT, " +
-            CUSTOMER_USER_EMAIL + " TEXT NOT NULL, " +
-                "FOREIGN KEY (" + CUSTOMER_USER_EMAIL + ") REFERENCES " +
-                USER_TABLE_NAME + "(" + USER_EMAIL + ") " +
+            CUSTOMER_USER_EMAIL + " TEXT NOT NULL " +
         ");";
 
     /****************************************** LOCATION ******************************************/
 
     public static final String LOCATION_TABLE_NAME = "location";
     public static final String LOCATION_ID = "location_id";
+    public static final String LOCATION_NAME = "location_name";
     public static final String LOCATION_BUSINESS_ID = "business_id";
     public static final String LOCATION_LATITUDE = "latitude";
     public static final String LOCATION_LONGITUDE = "longitude";
@@ -90,12 +83,11 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String CREATE_LOCATION_TABLE =
         "CREATE TABLE " + LOCATION_TABLE_NAME + "(" +
             LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            LOCATION_NAME + "TEXT NOT NULL, " +
             LOCATION_LATITUDE + " REAL NOT NULL, " +
             LOCATION_LONGITUDE + " REAL NOT NULL, " +
             LOCATION_ADDRESS + " TEXT NOT NULL, " +
-            LOCATION_BUSINESS_ID + " INTEGER NOT NULL, " +
-                "FOREIGN KEY (" + LOCATION_BUSINESS_ID + ") REFERENCES " +
-                BUSINESS_TABLE_NAME + "(" + BUSINESS_ID + ") " +
+            LOCATION_BUSINESS_ID + " INTEGER NOT NULL " +
         ");";
 
     /******************************************** SALE ********************************************/
@@ -111,9 +103,7 @@ public class DBUtils extends SQLiteOpenHelper {
             SALE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             SALE_DESCRIPTION + " TEXT NOT NULL, " +
             SALE_EXPIRATION_DATE + " TEXT NOT NULL, " +
-            SALE_CATEGORY_ID + " INTEGER NOT NULL, " +
-                "FOREIGN KEY (" + SALE_CATEGORY_ID + ") REFERENCES " +
-                CATEGORY_TABLE_NAME + "(" + CATEGORY_ID + ") " +
+            SALE_CATEGORY_ID + " INTEGER NOT NULL " +
         ");";
 
     /*************************************** SALE LOCATION ****************************************/
@@ -125,27 +115,19 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String CREATE_SALE_LOCATION_TABLE =
         "CREATE TABLE " + SALE_LOCATION_TABLE_NAME + "(" +
             SALE_LOCATION_SALE_ID + " INTEGER NOT NULL, " +
-            SALE_LOCATION_LOCATION_ID + " INTEGER NOT NULL, " +
-                "FOREIGN KEY (" + SALE_LOCATION_SALE_ID + ") REFERENCES " +
-                SALE_TABLE_NAME + "(" + SALE_ID + "), " +
-                "FOREIGN KEY (" + SALE_LOCATION_LOCATION_ID + ") REFERENCES " +
-                LOCATION_TABLE_NAME + "(" + LOCATION_ID + ")" +
+            SALE_LOCATION_LOCATION_ID + " INTEGER NOT NULL " +
         ");";
 
     /************************************* CUSTOMER CATEGORY **************************************/
 
     public static final String CUSTOMER_CATEGORY_TABLE_NAME = "customer_category";
     public static final String CUSTOMER_CATEGORY_CUSTOMER_ID= "customer_id";
-    public static final String CUSTOMER_CATEGORY_CATEGORY_ID = "location_id";
+    public static final String CUSTOMER_CATEGORY_CATEGORY_ID = "category_id";
 
     public static final String CREATE_CUSTOMER_CATEGORY_TABLE =
         "CREATE TABLE " + CUSTOMER_CATEGORY_TABLE_NAME + "(" +
             CUSTOMER_CATEGORY_CUSTOMER_ID + " INTEGER NOT NULL, " +
-            CUSTOMER_CATEGORY_CATEGORY_ID + " INTEGER NOT NULL, " +
-                "FOREIGN KEY (" + CUSTOMER_CATEGORY_CUSTOMER_ID + ") REFERENCES " +
-                CUSTOMER_TABLE_NAME + "(" + CUSTOMER_ID + "), " +
-                "FOREIGN KEY (" + CUSTOMER_CATEGORY_CATEGORY_ID + ") REFERENCES " +
-                CATEGORY_TABLE_NAME + "(" + CATEGORY_ID + ")" +
+            CUSTOMER_CATEGORY_CATEGORY_ID + " INTEGER NOT NULL " +
         ");";
 
     /*************************************** SALE REVIEW ******************************************/
@@ -161,11 +143,7 @@ public class DBUtils extends SQLiteOpenHelper {
             SALE_REVIEW_SALE_ID + " INTEGER NOT NULL, " +
             SALE_REVIEW_CUSTOMER_ID + " INTEGER NOT NULL, " +
             SALE_REVIEW_DATE + " TEXT NOT NULL, " +
-            SALE_REVIEW_LIKED + " TEXT NOT NULL, " +
-                "FOREIGN KEY (" + SALE_REVIEW_SALE_ID + ") REFERENCES " +
-                SALE_TABLE_NAME + "(" + SALE_ID + "), " +
-                "FOREIGN KEY (" + SALE_REVIEW_CUSTOMER_ID + ") REFERENCES " +
-                CUSTOMER_TABLE_NAME + "(" + CUSTOMER_ID + ")" +
+            SALE_REVIEW_LIKED + " TEXT NOT NULL " +
         ");";
 
     public DBUtils(Context context) {

@@ -69,10 +69,11 @@ public class LocationHelper {
         return locationArray;
     }
 
-    public void addlocation(int businessId, double latitude, double longitude, String address) {
+    public void addlocation(int businessId, String name, double latitude, double longitude, String address) {
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.LOCATION_BUSINESS_ID, businessId);
+        values.put(DBUtils.LOCATION_NAME, name);
         values.put(DBUtils.LOCATION_LATITUDE, latitude);
         values.put(DBUtils.LOCATION_LONGITUDE, longitude);
         values.put(DBUtils.LOCATION_ADDRESS, address);
@@ -86,6 +87,7 @@ public class LocationHelper {
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.LOCATION_ID, location.getLocationId());
+        values.put(DBUtils.LOCATION_NAME, location.getName());
         values.put(DBUtils.LOCATION_BUSINESS_ID, location.getBusinessId());
         values.put(DBUtils.LOCATION_LATITUDE, location.getLatitude());
         values.put(DBUtils.LOCATION_LONGITUDE, location.getLongitude());
@@ -113,11 +115,12 @@ public class LocationHelper {
     private Location parseLocation(Cursor cursor) {
 
         int locationId = cursor.getInt(cursor.getColumnIndex(DBUtils.LOCATION_ID));
+        String name = cursor.getString(cursor.getColumnIndex(DBUtils.LOCATION_NAME));
         int businessId = cursor.getInt(cursor.getColumnIndex(DBUtils.LOCATION_BUSINESS_ID));
         double latitude = cursor.getDouble(cursor.getColumnIndex(DBUtils.LOCATION_LATITUDE));
         double longitude = cursor.getDouble(cursor.getColumnIndex(DBUtils.LOCATION_LONGITUDE));
         String address = cursor.getString(cursor.getColumnIndex(DBUtils.LOCATION_ADDRESS));
 
-        return new Location(locationId, businessId, latitude, longitude, address);
+        return new Location(locationId, name, businessId, latitude, longitude, address);
     }
 }

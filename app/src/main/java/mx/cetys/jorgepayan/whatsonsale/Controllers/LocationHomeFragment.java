@@ -51,7 +51,7 @@ public class LocationHomeFragment extends Fragment {
                 double latitude = latlng.latitude;
                 double longitude = latlng.longitude;
                 int businessId = BusinessHomeActivity.currentBusiness.getBusinessId();
-                locationHelper.addlocation(businessId, latitude, longitude, address);
+                locationHelper.addlocation(businessId, "NAME", latitude, longitude, address);
                 locationHelper.getAllLocations();
             }
         });

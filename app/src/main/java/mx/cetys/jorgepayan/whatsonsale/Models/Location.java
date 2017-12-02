@@ -6,13 +6,15 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
 
 public class Location {
     private int locationId;
+    private String name;
     private int businessId;
     private double latitude;
     private double longitude;
     private String address;
 
-    public Location(int locationId, int businessId, double latitude, double longitude, String address) {
+    public Location(int locationId, String name, int businessId, double latitude, double longitude, String address) {
         this.locationId = locationId;
+        this.name = name;
         this.businessId = businessId;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -29,6 +31,14 @@ public class Location {
 
     public int getBusinessId() {
         return businessId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setBusinessId(int businessId) {
