@@ -35,25 +35,25 @@ public class LocationHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_location_home, container, false);
 
-        final EditText editTextLocation = view.findViewById(R.id.edit_text_location);
-        final Button btnAddLocation = view.findViewById(R.id.btn_addLocation);
-
-        final LocationHelper locationHelper =
-                new LocationHelper(getActivity().getApplicationContext());
-
-        btnAddLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String address = editTextLocation.getText().toString();
-                LatLng latlng =
-                        getLocationFromAddress(getActivity().getApplicationContext(), address);
-                double latitude = latlng.latitude;
-                double longitude = latlng.longitude;
-                int businessId = BusinessHomeActivity.currentBusiness.getBusinessId();
-                locationHelper.addlocation(businessId, "NAME", latitude, longitude, address);
-                locationHelper.getAllLocations();
-            }
-        });
+//        final EditText editTextLocation = view.findViewById(R.id.edit_text_location);
+//        final Button btnAddLocation = view.findViewById(R.id.btn_addLocation);
+//
+//        final LocationHelper locationHelper =
+//                new LocationHelper(getActivity().getApplicationContext());
+//
+//        btnAddLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String address = editTextLocation.getText().toString();
+//                LatLng latlng =
+//                        getLocationFromAddress(getActivity().getApplicationContext(), address);
+//                double latitude = latlng.latitude;
+//                double longitude = latlng.longitude;
+//                int businessId = BusinessHomeActivity.currentBusiness.getBusinessId();
+//                locationHelper.addlocation(businessId, "NAME", latitude, longitude, address);
+//                locationHelper.getAllLocations();
+//            }
+//        });
 
         return view;
     }
