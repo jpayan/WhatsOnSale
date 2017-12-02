@@ -1,10 +1,18 @@
 package mx.cetys.jorgepayan.whatsonsale.Controllers;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,7 +35,6 @@ import java.util.ArrayList;
 
 import mx.cetys.jorgepayan.whatsonsale.R;
 import mx.cetys.jorgepayan.whatsonsale.Utils.LocationHelper;
-
 
 public class MapFragment extends SupportMapFragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -81,8 +88,6 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
             getMap().setOnMapLongClickListener(this);
             getMap().setOnInfoWindowClickListener(this);
             getMap().setOnMapClickListener(this);
-
-
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -235,11 +240,7 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
             options.snippet("Marker Desc");
             googleMap.addMarker(options);
         }
-
-
     }
-
-
     @Override
     public void onLocationChanged(Location location) {
 
