@@ -37,7 +37,6 @@ public class LocationHomeFragment extends Fragment {
 
         final EditText editTextLocation = view.findViewById(R.id.edit_text_location);
         final Button btnAddLocation = view.findViewById(R.id.btn_addLocation);
-        final Button btnViewLocations = view.findViewById(R.id.btn_viewLocations);
 
         final LocationHelper locationHelper =
                 new LocationHelper(getActivity().getApplicationContext());
@@ -53,13 +52,6 @@ public class LocationHomeFragment extends Fragment {
                 int businessId = BusinessHomeActivity.currentBusiness.getBusinessId();
                 locationHelper.addlocation(businessId, "NAME", latitude, longitude, address);
                 locationHelper.getAllLocations();
-            }
-        });
-
-        btnViewLocations.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
 

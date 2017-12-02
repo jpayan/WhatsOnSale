@@ -122,12 +122,12 @@ public class DBUtils extends SQLiteOpenHelper {
 
     public static final String CUSTOMER_CATEGORY_TABLE_NAME = "customer_category";
     public static final String CUSTOMER_CATEGORY_CUSTOMER_ID= "customer_id";
-    public static final String CUSTOMER_CATEGORY_CATEGORY_ID = "category_id";
+    public static final String CUSTOMER_CATEGORY_CATEGORY_NAME = "category_name";
 
     public static final String CREATE_CUSTOMER_CATEGORY_TABLE =
         "CREATE TABLE " + CUSTOMER_CATEGORY_TABLE_NAME + "(" +
             CUSTOMER_CATEGORY_CUSTOMER_ID + " INTEGER NOT NULL, " +
-            CUSTOMER_CATEGORY_CATEGORY_ID + " INTEGER NOT NULL " +
+            CUSTOMER_CATEGORY_CATEGORY_NAME + " TEXT NOT NULL " +
         ");";
 
     /*************************************** SALE REVIEW ******************************************/
