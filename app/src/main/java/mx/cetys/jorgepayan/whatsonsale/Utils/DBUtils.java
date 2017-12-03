@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBUtils extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "WhatsOnSale.db";
-    public static final int DATABASE_VERSION = 10;
+    public static final int DATABASE_VERSION = 12;
 
     /******************************************** USER ********************************************/
 
@@ -94,16 +94,18 @@ public class DBUtils extends SQLiteOpenHelper {
 
     public static final String SALE_TABLE_NAME = "sale";
     public static final String SALE_ID = "sale_id";
-    public static final String SALE_CATEGORY_ID = "category_id";
+    public static final String SALE_BUSINESS_ID = "sale_business_id";
+    public static final String SALE_CATEGORY_NAME = "category_name";
     public static final String SALE_DESCRIPTION = "description";
     public static final String SALE_EXPIRATION_DATE = "expiration_date";
 
     public static final String CREATE_SALE_TABLE =
             "CREATE TABLE " + SALE_TABLE_NAME + "(" +
                     SALE_ID + " TEXT PRIMARY KEY, " +
+                    SALE_BUSINESS_ID + " TEXT NOT NULL, " +
                     SALE_DESCRIPTION + " TEXT NOT NULL, " +
                     SALE_EXPIRATION_DATE + " TEXT NOT NULL, " +
-                    SALE_CATEGORY_ID + " TEXT NOT NULL " +
+                    SALE_CATEGORY_NAME + " TEXT NOT NULL " +
                     ");";
 
     /*************************************** SALE LOCATION ****************************************/
