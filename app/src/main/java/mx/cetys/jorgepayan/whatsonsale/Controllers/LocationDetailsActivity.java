@@ -14,10 +14,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 
-import mx.cetys.jorgepayan.whatsonsale.Models.Location;
 import mx.cetys.jorgepayan.whatsonsale.Utils.LocationHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
-import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 import mx.cetys.jorgepayan.whatsonsale.R;
 
 public class LocationDetailsActivity extends AppCompatActivity {
@@ -50,7 +48,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
                 Intent intent;
                 try {
                     intent = builder.build(LocationDetailsActivity.this);
-                    startActivityForResult(intent,PLACE_PICKER_REQUEST);
+                    startActivityForResult(intent, PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException e) {
                     e.printStackTrace();
                 } catch (GooglePlayServicesNotAvailableException e) {
@@ -59,28 +57,28 @@ public class LocationDetailsActivity extends AppCompatActivity {
             }
         } );
 
-        btnSaveLocation.setOnClickListener( new View.OnClickListener() {
+        btnSaveLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 locationName = editTextLocationName.getText().toString();
                 locationAddress = editTextLocationAddress.getText().toString();
-                if(locationName.length() > 0 && locationAddress.length() > 0){
+                if(locationName.length() > 0 && locationAddress.length() > 0) {
                     locationHelper.addLocation(locationName,
-                            BusinessHomeActivity.currentBusiness.getBusinessId(),
-                            locationCoordenates.latitude, locationCoordenates.longitude,
-                            locationAddress);
-                    SimpleDialog successfulDialog =
-                            new SimpleDialog("Location successfully saved.", "Ok");
-                    successfulDialog.show(fm, "Alert Dialog Fragment");
+                        BusinessHomeActivity.currentBusiness.getBusinessId(),
+                        locationCoordenates.latitude, locationCoordenates.longitude,
+                        locationAddress);
+                    Intent data = new Intent();
+                    data.putExtra("SUCCESS", "Success.");
+                    setResult(RESULT_OK, data);
                     finish();
                 } else {
                      SimpleDialog emptyFieldsDialog =
-                            new SimpleDialog("Fill up all the fields before logging in or registering.", "Ok");
+                         new SimpleDialog(
+                             "Fill up all the fields before saving the location.", "Ok");
                     emptyFieldsDialog.show(fm, "Alert Dialog Fragment");
                 }
             }
-        } );
-
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

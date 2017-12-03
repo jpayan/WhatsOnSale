@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,16 @@ import java.util.ArrayList;
 import mx.cetys.jorgepayan.whatsonsale.Models.Location;
 import mx.cetys.jorgepayan.whatsonsale.R;
 import mx.cetys.jorgepayan.whatsonsale.Utils.LocationHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
+
+import static android.app.Activity.RESULT_OK;
 
 public class LocationHomeFragment extends Fragment {
+    int LOCATION_DETAILS_REQUEST = 1;
+
     LocationHelper locationHelper;
+    LocationAdapter locationAdapter;
+    ListView listViewLocation;
 
     public static LocationHomeFragment newInstance() {
         return new LocationHomeFragment();
@@ -35,8 +43,8 @@ public class LocationHomeFragment extends Fragment {
         locationHelper =
                 new LocationHelper(getActivity().getApplicationContext());
 
-        LocationAdapter locationAdapter = new LocationAdapter(getContext().getApplicationContext());
-        ListView listViewLocation = (ListView) view.findViewById(R.id.list_view_location);
+        locationAdapter = new LocationAdapter(getContext().getApplicationContext());
+        listViewLocation = (ListView) view.findViewById(R.id.list_view_location);
         listViewLocation.setAdapter(locationAdapter);
 
         fillLocationListView(BusinessHomeActivity.currentBusiness.getBusinessId(), locationAdapter);
@@ -48,11 +56,10 @@ public class LocationHomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext().getApplicationContext(),
                         LocationDetailsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, LOCATION_DETAILS_REQUEST);
 
             }
         });
-
         return view;
     }
 
@@ -62,6 +69,18 @@ public class LocationHomeFragment extends Fragment {
         if(!businessLocations.isEmpty()){
             for(Location location : businessLocations){
                 locationAdapter.add(location);
+            }
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == LOCATION_DETAILS_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                fillLocationListView(BusinessHomeActivity.currentBusiness.getBusinessId(),
+                    locationAdapter);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                SimpleDialog successDialog = new SimpleDialog("Location successfully saved.", "Ok");
+                successDialog.show(fm, "Alert Dialog Fragment");
             }
         }
     }
