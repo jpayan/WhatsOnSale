@@ -43,7 +43,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
 
-        <activity android:name=".Controllers.LocationDetailsActivity"></activity>
+        <activity android:name=".Controllers.LocationDetailsActivity" />
+        <activity android:name=".Controllers.SaleDetailsActivity"></activity>
     </application>
 
 </manifest>

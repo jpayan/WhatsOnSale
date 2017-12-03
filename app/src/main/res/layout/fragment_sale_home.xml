@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,23 +7,24 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:id="@+id/txtView_sale"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
-        android:text="SALE"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+    <ListView
+        android:id="@+id/list_view_sale"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/textView4"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_addSale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtView_sale"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="21dp"
-        android:text="Sale Description" />
-</RelativeLayout>
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:visibility="visible"
+        app:backgroundTint="@color/common_signin_btn_dark_text_default"
+        app:elevation="5dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/common_signin_btn_dark_text_default"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+
+</FrameLayout>

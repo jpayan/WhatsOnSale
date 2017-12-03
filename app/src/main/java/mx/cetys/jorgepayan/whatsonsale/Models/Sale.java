@@ -6,13 +6,15 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
 
 public class Sale {
     private String saleId;
-    private String categoryId;
+    private String saleBusinesId;
+    private String categoryName;
     private String description;
     private String expirationDate;
 
-    public Sale(String saleId, String categoryId, String description, String expirationDate) {
+    public Sale(String saleId, String saleBusinesId, String categoryId, String description, String expirationDate) {
         this.saleId = saleId;
-        this.categoryId = categoryId;
+        this.saleBusinesId = saleBusinesId;
+        this.categoryName = categoryName;
         this.description = description;
         this.expirationDate = expirationDate;
     }
@@ -25,12 +27,16 @@ public class Sale {
         this.saleId = saleId;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public String getSaleBusinesId(){return saleBusinesId;}
+
+    public void setSaleBusinesId(String saleBusinesId) {this.saleBusinesId = saleBusinesId; }
+
+    public String getcategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setcategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getDescription() {
