@@ -35,7 +35,7 @@ public class SaleReviewHelper {
         dbHelper.close();
     }
 
-    public SaleReview getSaleReview(int saleReviewsSaleId) {
+    public SaleReview getSaleReview(String saleReviewsSaleId) {
         open();
         Cursor cursor = database.query(DBUtils.SALE_REVIEW_TABLE_NAME, SALE_REVIEW_TABLE_COLUMNS,
                 DBUtils.SALE_REVIEW_SALE_ID + " = " + saleReviewsSaleId, null, null, null, null);
@@ -48,7 +48,7 @@ public class SaleReviewHelper {
         return saleReview;
     }
 
-    public long addSaleReview(int saleId, int customerId, int date, String liked) {
+    public long addSaleReview(String saleId, String customerId, int date, String liked) {
         open();
         ContentValues values = new ContentValues();
 
@@ -77,7 +77,7 @@ public class SaleReviewHelper {
         return response;
     }
 
-    public void deleteSaleReview(int saleReviewSale_id) {
+    public void deleteSaleReview(String saleReviewSale_id) {
         open();
         database.delete(DBUtils.SALE_REVIEW_TABLE_NAME, DBUtils.SALE_REVIEW_SALE_ID + " = " +
                 saleReviewSale_id, null);
@@ -91,8 +91,8 @@ public class SaleReviewHelper {
     }
 
     private SaleReview parseSaleReview(Cursor cursor) {
-        int saleReviewSaleId = cursor.getInt(cursor.getColumnIndex(DBUtils.SALE_REVIEW_SALE_ID));
-        int saleReviewCustomerId = cursor.getInt(cursor.getColumnIndex(DBUtils.SALE_REVIEW_CUSTOMER_ID));
+        String saleReviewSaleId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_SALE_ID));
+        String saleReviewCustomerId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_CUSTOMER_ID));
         String saleReviewDate = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_DATE));
         String saleReviewLiked = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_LIKED));
 

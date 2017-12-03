@@ -35,7 +35,7 @@ public class CustomerCategoryHelper {
         dbHelper.close();
     }
 
-    public CustomerCategory getCustomerCategory(int customerCategoryCustomerId) {
+    public CustomerCategory getCustomerCategory(String customerCategoryCustomerId) {
         open();
         Cursor cursor = database.query(DBUtils.CUSTOMER_CATEGORY_TABLE_NAME, CUSTOMER_CATEGORY_TABLE_COLUMNS,
                 DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID + " = " + customerCategoryCustomerId, null, null, null, null);
@@ -48,7 +48,7 @@ public class CustomerCategoryHelper {
         return customerCategory;
     }
 
-    public long addCustomerCategory(int customerId, int categoryId) {
+    public long addCustomerCategory(String customerId, String categoryId) {
         open();
         ContentValues values = new ContentValues();
 
@@ -73,7 +73,7 @@ public class CustomerCategoryHelper {
         return response;
     }
 
-    public void deleteCustomerCategory(int customerCategoryCustomer_id) {
+    public void deleteCustomerCategory(String customerCategoryCustomer_id) {
         open();
         database.delete(DBUtils.CUSTOMER_CATEGORY_TABLE_NAME, DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID + " = " + customerCategoryCustomer_id, null);
         close();
@@ -86,8 +86,8 @@ public class CustomerCategoryHelper {
     }
 
     private CustomerCategory parseCustomerCategory(Cursor cursor) {
-        int customerCategoryCustomerId = cursor.getInt(cursor.getColumnIndex(DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID));
-        int customerCategoryCategoryId = cursor.getInt(cursor.getColumnIndex(DBUtils.CUSTOMER_CATEGORY_CATEGORY_NAME));
+        String customerCategoryCustomerId = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID));
+        String customerCategoryCategoryId = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_CATEGORY_CATEGORY_NAME));
 
         return new CustomerCategory(customerCategoryCustomerId, customerCategoryCustomerId);
     }

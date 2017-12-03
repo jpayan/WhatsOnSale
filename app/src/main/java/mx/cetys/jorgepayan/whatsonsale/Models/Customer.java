@@ -5,13 +5,13 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
  */
 
 public class Customer {
-    private int customerId;
+    private String customerId;
     private String userEmail;
     private String name;
     private int age;
     private String gender;
 
-    public Customer(int customerId, String userEmail, String name, int age, String gender) {
+    public Customer(String customerId, String userEmail, String name, int age, String gender) {
         this.customerId = customerId;
         this.userEmail = userEmail;
         this.name = name;
@@ -19,11 +19,11 @@ public class Customer {
         this.gender = gender;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

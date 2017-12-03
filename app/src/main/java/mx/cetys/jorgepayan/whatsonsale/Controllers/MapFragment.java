@@ -220,26 +220,26 @@ public class MapFragment extends SupportMapFragment implements GoogleApiClient.C
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        MarkerOptions options = new MarkerOptions();
-        ArrayList<LatLng> latlngs = new ArrayList<>();
-        locationHelper.open();
-        locationArray = locationHelper.getAllLocations();
-        System.out.println("LOCATIONS SIZE: " + locationArray.size());
-        for (mx.cetys.jorgepayan.whatsonsale.Models.Location loc: locationArray) {
-            Double lat = loc.getLatitude();
-            Double lon = loc.getLongitude();
-            System.out.println("LAT: " + lat);
-            System.out.println("LON: " + lon);
-            latlngs.add(new LatLng(lat, lon));
-        }
-        locationHelper.close();
-        for (LatLng point : latlngs) {
-            System.out.println("LATLNGS: " + latlngs.size());
-            options.position(point);
-            options.title("Marker Title");
-            options.snippet("Marker Desc");
-            googleMap.addMarker(options);
-        }
+//        MarkerOptions options = new MarkerOptions();
+//        ArrayList<LatLng> latlngs = new ArrayList<>();
+//        locationHelper.open();
+//        locationArray = locationHelper.getAllLocations();
+//        System.out.println("LOCATIONS SIZE: " + locationArray.size());
+//        for (mx.cetys.jorgepayan.whatsonsale.Models.Location loc: locationArray) {
+//            Double lat = loc.getLatitude();
+//            Double lon = loc.getLongitude();
+//            System.out.println("LAT: " + lat);
+//            System.out.println("LON: " + lon);
+//            latlngs.add(new LatLng(lat, lon));
+//        }
+//        locationHelper.close();
+//        for (LatLng point : latlngs) {
+//            System.out.println("LATLNGS: " + latlngs.size());
+//            options.position(point);
+//            options.title("Marker Title");
+//            options.snippet("Marker Desc");
+//            googleMap.addMarker(options);
+//        }
     }
     @Override
     public void onLocationChanged(Location location) {

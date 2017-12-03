@@ -64,6 +64,7 @@ public class BusinessHelper {
         open();
         ContentValues values = new ContentValues();
 
+        values.put(DBUtils.BUSINESS_ID, Utils.generateId().toString());
         values.put(DBUtils.BUSINESS_USER_EMAIL, businessUserEmail);
         values.put(DBUtils.BUSINESS_NAME, businessName);
         values.put(DBUtils.BUSINESS_HQ_ADDRESS, hqAddress);
@@ -89,7 +90,7 @@ public class BusinessHelper {
         return response;
     }
 
-    public void deleteBusiness(int businessId) {
+    public void deleteBusiness(String businessId) {
         open();
         database.delete(DBUtils.BUSINESS_TABLE_NAME, DBUtils.BUSINESS_ID + " = " + businessId, null);
         close();
@@ -102,7 +103,7 @@ public class BusinessHelper {
     }
 
     private Business parseBusiness(Cursor cursor) {
-        int businessId = cursor.getInt(cursor.getColumnIndex(DBUtils.BUSINESS_ID));
+        String businessId = cursor.getString(cursor.getColumnIndex(DBUtils.BUSINESS_ID));
         String businessUserEmail =
             cursor.getString(cursor.getColumnIndex(DBUtils.BUSINESS_USER_EMAIL));
         String businessName = cursor.getString(cursor.getColumnIndex(DBUtils.BUSINESS_NAME));

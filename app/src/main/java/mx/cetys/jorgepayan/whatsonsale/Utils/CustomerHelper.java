@@ -36,7 +36,7 @@ public class CustomerHelper {
         dbHelper.close();
     }
 
-    public Customer getCustomer(int customerId) {
+    public Customer getCustomer(String customerId) {
         open();
         Cursor cursor = database.query(DBUtils.CUSTOMER_TABLE_NAME, CUSTOMER_TABLE_COLUMNS,
                 DBUtils.CUSTOMER_ID + " = " + customerId, null, null, null, null);
@@ -79,7 +79,7 @@ public class CustomerHelper {
         return response;
     }
 
-    public void deleteCustomer(int customerId) {
+    public void deleteCustomer(String customerId) {
         open();
         database.delete(DBUtils.CUSTOMER_TABLE_NAME, DBUtils.CUSTOMER_ID + " = " + customerId, null);
         close();
@@ -92,7 +92,7 @@ public class CustomerHelper {
     }
 
     private Customer parsecustomer(Cursor cursor) {
-        int customerId = cursor.getInt(cursor.getColumnIndex(DBUtils.CUSTOMER_ID));
+        String customerId = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_ID));
         String userEmail = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_USER_EMAIL));
         String name = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_NAME));
         int age = cursor.getInt(cursor.getColumnIndex(DBUtils.CUSTOMER_AGE));

@@ -5,23 +5,23 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
  */
 
 public class Business {
-    private int businessId;
+    private String businessId;
     private String userEmail;
     private String businessName;
     private String hqAddress;
 
-    public Business(int businessId, String userEmail, String businessName, String hqAddress) {
+    public Business(String businessId, String userEmail, String businessName, String hqAddress) {
         this.businessId = businessId;
         this.userEmail = userEmail;
         this.businessName = businessName;
         this.hqAddress = hqAddress;
     }
 
-    public int getBusinessId() {
+    public String getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(int businessId) {
+    public void setBusinessId(String businessId) {
         this.businessId = businessId;
     }
 

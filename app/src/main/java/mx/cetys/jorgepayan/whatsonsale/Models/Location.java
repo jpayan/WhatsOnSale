@@ -1,18 +1,21 @@
 package mx.cetys.jorgepayan.whatsonsale.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by jorge.payan on 11/17/17.
  */
 
-public class Location {
-    private int locationId;
+public class Location implements Parcelable {
+    private String locationId;
     private String name;
-    private int businessId;
+    private String businessId;
     private double latitude;
     private double longitude;
     private String address;
 
-    public Location(int locationId, String name, int businessId, double latitude, double longitude, String address) {
+    public Location(String locationId, String name, String businessId, double latitude, double longitude, String address) {
         this.locationId = locationId;
         this.name = name;
         this.businessId = businessId;
@@ -21,15 +24,24 @@ public class Location {
         this.address = address;
     }
 
-    public int getLocationId() {
+    public Location(Parcel in) {
+        locationId = in.readString();
+        name = in.readString();
+        businessId = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        address = in.readString();
+    }
+
+    public String getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(int locationId) {
+    public void setLocationId(String locationId) {
         this.locationId = locationId;
     }
 
-    public int getBusinessId() {
+    public String getBusinessId() {
         return businessId;
     }
 
@@ -41,7 +53,7 @@ public class Location {
         this.name = name;
     }
 
-    public void setBusinessId(int businessId) {
+    public void setBusinessId(String businessId) {
         this.businessId = businessId;
     }
 
@@ -68,4 +80,31 @@ public class Location {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(locationId);
+        parcel.writeString(name);
+        parcel.writeString(businessId);
+        parcel.writeDouble(latitude);
+        parcel.writeDouble(longitude);
+        parcel.writeString(address);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @Override
+        public Location createFromParcel(Parcel in) {
+            return new Location(in);
+        }
+
+        @Override
+        public Location[] newArray(int size) {
+            return new Location[size];
+        }
+    };
 }

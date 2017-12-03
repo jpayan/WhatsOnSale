@@ -36,7 +36,7 @@ public class SaleLocationHelper {
         dbHelper.close();
     }
 
-    public SaleLocation getSaleLocation(int saleId, int locationId) {
+    public SaleLocation getSaleLocation(String saleId, String locationId) {
         open();
         Cursor cursor = database.query(DBUtils.SALE_LOCATION_TABLE_NAME, SALE_LOCATION_TABLE_COLUMNS,
             DBUtils.SALE_LOCATION_SALE_ID + " = " + saleId + " AND " +
@@ -50,7 +50,7 @@ public class SaleLocationHelper {
         return saleLocation;
     }
 
-    public long addSaleLocation(int saleId, int locationId) {
+    public long addSaleLocation(String saleId, String locationId) {
         open();
         ContentValues values = new ContentValues();
 
@@ -76,7 +76,7 @@ public class SaleLocationHelper {
         return response;
     }
 
-    public void deleteSaleLocation(int saleLocationSale_id) {
+    public void deleteSaleLocation(String saleLocationSale_id) {
         open();
         database.delete(DBUtils.SALE_LOCATION_TABLE_NAME, DBUtils.SALE_LOCATION_SALE_ID + " = " +
                 saleLocationSale_id, null);
@@ -90,8 +90,8 @@ public class SaleLocationHelper {
     }
 
     private SaleLocation parseSaleLocation(Cursor cursor) {
-        int saleLocationSaleId = cursor.getInt(cursor.getColumnIndex(DBUtils.SALE_LOCATION_SALE_ID));
-        int saleLocationLocationId = cursor.getInt(cursor.getColumnIndex(DBUtils.SALE_LOCATION_LOCATION_ID));
+        String saleLocationSaleId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_LOCATION_SALE_ID));
+        String saleLocationLocationId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_LOCATION_LOCATION_ID));
 
         return new SaleLocation(saleLocationSaleId, saleLocationSaleId);
     }

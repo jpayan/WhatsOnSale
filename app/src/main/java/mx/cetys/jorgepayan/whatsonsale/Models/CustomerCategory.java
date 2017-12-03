@@ -5,27 +5,27 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
  */
 
 public class CustomerCategory {
-    private int customerId;
-    private int categoryId;
+    private String customerId;
+    private String categoryId;
 
-    public CustomerCategory(int customerId, int categoryId) {
+    public CustomerCategory(String customerId, String categoryId) {
         this.customerId = customerId;
         this.categoryId = categoryId;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
-    public int getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 }

@@ -5,27 +5,27 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
  */
 
 public class SaleLocation {
-    private int saleId;
-    private int locationId;
+    private String saleId;
+    private String locationId;
 
-    public SaleLocation(int saleId, int locationId) {
+    public SaleLocation(String saleId, String locationId) {
         this.saleId = saleId;
         this.locationId = locationId;
     }
 
-    public int getSaleId() {
+    public String getSaleId() {
         return saleId;
     }
 
-    public void setSaleId(int saleId) {
+    public void setSaleId(String saleId) {
         this.saleId = saleId;
     }
 
-    public int getLocationId() {
+    public String getLocationId() {
         return locationId;
     }
 
-    public void setLocationId(int locationId) {
+    public void setLocationId(String locationId) {
         this.locationId = locationId;
     }
 }

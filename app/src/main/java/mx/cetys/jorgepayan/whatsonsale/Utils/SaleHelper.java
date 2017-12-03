@@ -46,7 +46,7 @@ public class SaleHelper {
         return sale;
     }
 
-    public void addSale(int Sale_id, int categoryId, String description, String expiration_date) {
+    public void addSale(String Sale_id, String categoryId, String description, String expiration_date) {
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.SALE_ID, Sale_id);
@@ -70,7 +70,7 @@ public class SaleHelper {
                 null);
     }
 
-    public void deleteSale(int SaleId) {
+    public void deleteSale(String SaleId) {
         database.delete(DBUtils.SALE_TABLE_NAME, DBUtils.SALE_ID + " = " + SaleId, null);
     }
 
@@ -80,8 +80,8 @@ public class SaleHelper {
 
     private Sale parseSale(Cursor cursor) {
 
-        int SaleId = cursor.getInt(cursor.getColumnIndex(DBUtils.SALE_ID));
-        int categoryId = cursor.getInt(cursor.getColumnIndex(DBUtils.SALE_CATEGORY_ID));
+        String SaleId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_ID));
+        String categoryId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_CATEGORY_ID));
         String description = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_DESCRIPTION));
         String expirationdate =
                 cursor.getString(cursor.getColumnIndex(DBUtils.SALE_EXPIRATION_DATE));

@@ -40,7 +40,7 @@
     tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.LocationHomeFragment" >
 
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/list_view_location"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

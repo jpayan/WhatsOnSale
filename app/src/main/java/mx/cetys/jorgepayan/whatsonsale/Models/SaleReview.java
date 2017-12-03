@@ -5,31 +5,31 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
  */
 
 public class SaleReview {
-    private int saleId;
-    private int customerId;
+    private String saleId;
+    private String customerId;
     private String date;
     private String liked;
 
-    public SaleReview(int saleId, int customerId, String date, String liked) {
+    public SaleReview(String saleId, String customerId, String date, String liked) {
         this.saleId = saleId;
         this.customerId = customerId;
         this.date = date;
         this.liked = liked;
     }
 
-    public int getSaleId() {
+    public String getSaleId() {
         return saleId;
     }
 
-    public void setSaleId(int saleId) {
+    public void setSaleId(String saleId) {
         this.saleId = saleId;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

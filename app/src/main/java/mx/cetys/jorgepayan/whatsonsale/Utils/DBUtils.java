@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBUtils extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "WhatsOnSale.db";
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 10;
 
     /******************************************** USER ********************************************/
 
@@ -20,11 +20,11 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String USER_TYPE = "type";
 
     public static final String CREATE_USER_TABLE =
-        "CREATE TABLE " + USER_TABLE_NAME + "(" +
-            USER_EMAIL + " TEXT PRIMARY KEY, " +
-            USER_PASSWORD + " TEXT NOT NULL, " +
-            USER_TYPE + " TEXT NOT NULL" +
-        ");";
+            "CREATE TABLE " + USER_TABLE_NAME + "(" +
+                    USER_EMAIL + " TEXT PRIMARY KEY, " +
+                    USER_PASSWORD + " TEXT NOT NULL, " +
+                    USER_TYPE + " TEXT NOT NULL" +
+                    ");";
 
     /****************************************** CATEGORY ******************************************/
 
@@ -32,9 +32,9 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String CATEGORY_NAME = "name";
 
     public static final String CREATE_CATEGORY_TABLE =
-        "CREATE TABLE " + CATEGORY_TABLE_NAME + "(" +
-            CATEGORY_NAME + " TEXT PRIMARY KEY" +
-        ");";
+            "CREATE TABLE " + CATEGORY_TABLE_NAME + "(" +
+                    CATEGORY_NAME + " TEXT PRIMARY KEY" +
+                    ");";
 
     /****************************************** BUSINESS ******************************************/
 
@@ -45,12 +45,12 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String BUSINESS_HQ_ADDRESS = "hq_address";
 
     public static final String CREATE_BUSINESS_TABLE =
-        "CREATE TABLE " + BUSINESS_TABLE_NAME + "(" +
-            BUSINESS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            BUSINESS_NAME + " TEXT NOT NULL, " +
-            BUSINESS_HQ_ADDRESS + " TEXT NOT NULL, " +
-            BUSINESS_USER_EMAIL + " TEXT NOT NULL" +
-        ");";
+            "CREATE TABLE " + BUSINESS_TABLE_NAME + "(" +
+                    BUSINESS_ID + " TEXT PRIMARY KEY, " +
+                    BUSINESS_NAME + " TEXT NOT NULL, " +
+                    BUSINESS_HQ_ADDRESS + " TEXT NOT NULL, " +
+                    BUSINESS_USER_EMAIL + " TEXT NOT NULL" +
+                    ");";
 
     /****************************************** CUSTOMER ******************************************/
 
@@ -62,13 +62,13 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String CUSTOMER_GENDER = "gender";
 
     public static final String CREATE_CUSTOMER_TABLE =
-        "CREATE TABLE " + CUSTOMER_TABLE_NAME + "(" +
-            CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            CUSTOMER_NAME + " TEXT NOT NULL, " +
-            CUSTOMER_AGE + " TEXT NOT NULL, " +
-            CUSTOMER_GENDER + " TEXT, " +
-            CUSTOMER_USER_EMAIL + " TEXT NOT NULL " +
-        ");";
+            "CREATE TABLE " + CUSTOMER_TABLE_NAME + "(" +
+                    CUSTOMER_ID + " TEXT PRIMARY KEY, " +
+                    CUSTOMER_NAME + " TEXT NOT NULL, " +
+                    CUSTOMER_AGE + " TEXT NOT NULL, " +
+                    CUSTOMER_GENDER + " TEXT, " +
+                    CUSTOMER_USER_EMAIL + " TEXT NOT NULL " +
+                    ");";
 
     /****************************************** LOCATION ******************************************/
 
@@ -82,12 +82,12 @@ public class DBUtils extends SQLiteOpenHelper {
 
     public static final String CREATE_LOCATION_TABLE =
         "CREATE TABLE " + LOCATION_TABLE_NAME + "(" +
-            LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            LOCATION_NAME + "TEXT NOT NULL, " +
+            LOCATION_ID + " TEXT PRIMARY KEY, " +
+            LOCATION_NAME + " TEXT NOT NULL, " +
             LOCATION_LATITUDE + " REAL NOT NULL, " +
             LOCATION_LONGITUDE + " REAL NOT NULL, " +
             LOCATION_ADDRESS + " TEXT NOT NULL, " +
-            LOCATION_BUSINESS_ID + " INTEGER NOT NULL " +
+            LOCATION_BUSINESS_ID + " TEXT NOT NULL " +
         ");";
 
     /******************************************** SALE ********************************************/
@@ -99,12 +99,12 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String SALE_EXPIRATION_DATE = "expiration_date";
 
     public static final String CREATE_SALE_TABLE =
-        "CREATE TABLE " + SALE_TABLE_NAME + "(" +
-            SALE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            SALE_DESCRIPTION + " TEXT NOT NULL, " +
-            SALE_EXPIRATION_DATE + " TEXT NOT NULL, " +
-            SALE_CATEGORY_ID + " INTEGER NOT NULL " +
-        ");";
+            "CREATE TABLE " + SALE_TABLE_NAME + "(" +
+                    SALE_ID + " TEXT PRIMARY KEY, " +
+                    SALE_DESCRIPTION + " TEXT NOT NULL, " +
+                    SALE_EXPIRATION_DATE + " TEXT NOT NULL, " +
+                    SALE_CATEGORY_ID + " TEXT NOT NULL " +
+                    ");";
 
     /*************************************** SALE LOCATION ****************************************/
 
@@ -113,10 +113,10 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String SALE_LOCATION_LOCATION_ID = "location_id";
 
     public static final String CREATE_SALE_LOCATION_TABLE =
-        "CREATE TABLE " + SALE_LOCATION_TABLE_NAME + "(" +
-            SALE_LOCATION_SALE_ID + " INTEGER NOT NULL, " +
-            SALE_LOCATION_LOCATION_ID + " INTEGER NOT NULL " +
-        ");";
+            "CREATE TABLE " + SALE_LOCATION_TABLE_NAME + "(" +
+                    SALE_LOCATION_SALE_ID + " TEXT NOT NULL, " +
+                    SALE_LOCATION_LOCATION_ID + " TEXT NOT NULL " +
+                    ");";
 
     /************************************* CUSTOMER CATEGORY **************************************/
 
@@ -125,10 +125,10 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String CUSTOMER_CATEGORY_CATEGORY_NAME = "category_name";
 
     public static final String CREATE_CUSTOMER_CATEGORY_TABLE =
-        "CREATE TABLE " + CUSTOMER_CATEGORY_TABLE_NAME + "(" +
-            CUSTOMER_CATEGORY_CUSTOMER_ID + " INTEGER NOT NULL, " +
-            CUSTOMER_CATEGORY_CATEGORY_NAME + " TEXT NOT NULL " +
-        ");";
+            "CREATE TABLE " + CUSTOMER_CATEGORY_TABLE_NAME + "(" +
+                    CUSTOMER_CATEGORY_CUSTOMER_ID + " TEXT NOT NULL, " +
+                    CUSTOMER_CATEGORY_CATEGORY_NAME + " TEXT NOT NULL " +
+                    ");";
 
     /*************************************** SALE REVIEW ******************************************/
 
@@ -139,12 +139,12 @@ public class DBUtils extends SQLiteOpenHelper {
     public static final String SALE_REVIEW_LIKED = "liked";
 
     public static final String CREATE_SALE_REVIEW_TABLE =
-        "CREATE TABLE " + SALE_REVIEW_TABLE_NAME + "(" +
-            SALE_REVIEW_SALE_ID + " INTEGER NOT NULL, " +
-            SALE_REVIEW_CUSTOMER_ID + " INTEGER NOT NULL, " +
-            SALE_REVIEW_DATE + " TEXT NOT NULL, " +
-            SALE_REVIEW_LIKED + " TEXT NOT NULL " +
-        ");";
+            "CREATE TABLE " + SALE_REVIEW_TABLE_NAME + "(" +
+                    SALE_REVIEW_SALE_ID + " TEXT NOT NULL, " +
+                    SALE_REVIEW_CUSTOMER_ID + " TEXT NOT NULL, " +
+                    SALE_REVIEW_DATE + " TEXT NOT NULL, " +
+                    SALE_REVIEW_LIKED + " TEXT NOT NULL " +
+                    ");";
 
     public DBUtils(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
