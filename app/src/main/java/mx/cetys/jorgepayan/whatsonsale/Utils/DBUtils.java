@@ -65,7 +65,7 @@ public class DBUtils extends SQLiteOpenHelper {
             "CREATE TABLE " + CUSTOMER_TABLE_NAME + "(" +
                     CUSTOMER_ID + " TEXT PRIMARY KEY, " +
                     CUSTOMER_NAME + " TEXT NOT NULL, " +
-                    CUSTOMER_AGE + " TEXT NOT NULL, " +
+                    CUSTOMER_AGE + " INTEGER NOT NULL, " +
                     CUSTOMER_GENDER + " TEXT, " +
                     CUSTOMER_USER_EMAIL + " TEXT NOT NULL " +
                     ");";
