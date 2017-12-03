@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.AddLocationActivity">
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.LocationDetailsActivity">
 
     <EditText
-        android:id="@+id/edit_txt_location_name"
+        android:id="@+id/edit_txt_locationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/textView5"
@@ -29,10 +29,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
     <EditText
-        android:id="@+id/edit_text_location_address"
+        android:id="@+id/edit_text_locationAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/edit_txt_location_name"
+        android:layout_alignStart="@+id/edit_txt_locationName"
         android:layout_below="@+id/txtView_location_address"
         android:ems="10"
         android:hint="Type address..."
@@ -52,8 +52,17 @@
         android:id="@+id/txtView_location_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_txt_location_name"
+        android:layout_below="@+id/edit_txt_locationName"
         android:layout_centerHorizontal="true"
         android:text="Location Address"
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+    <Button
+        android:id="@+id/btn_saveLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="77dp"
+        android:text="SAVE" />
 </RelativeLayout>
