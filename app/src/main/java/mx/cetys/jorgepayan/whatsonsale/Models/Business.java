@@ -1,5 +1,10 @@
 package mx.cetys.jorgepayan.whatsonsale.Models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 /**
  * Created by jorge.payan on 11/17/17.
  */
@@ -15,6 +20,18 @@ public class Business {
         this.userEmail = userEmail;
         this.businessName = businessName;
         this.hqAddress = hqAddress;
+    }
+
+    public Business(JSONObject jsonObject) {
+        try {
+            this.businessId = jsonObject.getString("business_id");
+            this.userEmail = jsonObject.getString("user_email");
+            this.businessName = jsonObject.getString("business_name");
+            this.hqAddress = jsonObject.getString("hq_address");
+        }
+        catch(JSONException e){
+
+        }
     }
 
     public String getBusinessId() {

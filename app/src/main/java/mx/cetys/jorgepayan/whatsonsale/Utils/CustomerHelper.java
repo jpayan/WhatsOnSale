@@ -49,18 +49,20 @@ public class CustomerHelper {
         return customer;
     }
 
-    public long addCustomer(String userEmail, String name, int age, String gender) {
+    public void addCustomer(String customerId, String userEmail, String name, int age, String gender) {
         open();
         ContentValues values = new ContentValues();
 
+        customerId = (customerId.isEmpty()) ? Utils.generateId() : customerId;
+
+        values.put(DBUtils.CUSTOMER_ID, customerId);
         values.put(DBUtils.CUSTOMER_NAME, name);
         values.put(DBUtils.CUSTOMER_AGE, age);
         values.put(DBUtils.CUSTOMER_GENDER, gender);
         values.put(DBUtils.CUSTOMER_USER_EMAIL, userEmail);
 
-        long customerId = database.insert(DBUtils.CUSTOMER_TABLE_NAME, null, values);
+        database.insert(DBUtils.CUSTOMER_TABLE_NAME, null, values);
         close();
-        return customerId;
     }
 
     public int updateCustomer(Customer customer) {

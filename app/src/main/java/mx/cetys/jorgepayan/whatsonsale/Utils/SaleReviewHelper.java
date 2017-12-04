@@ -48,7 +48,7 @@ public class SaleReviewHelper {
         return saleReview;
     }
 
-    public long addSaleReview(String saleId, String customerId, int date, String liked) {
+    public long addSaleReview(String saleId, String customerId, String date, String liked) {
         open();
         ContentValues values = new ContentValues();
 

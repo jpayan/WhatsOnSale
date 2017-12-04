@@ -66,7 +66,7 @@ public class RegisterCustomerActivity extends AppCompatActivity {
             } else {
                 userHelper.addUser(finalEmail, finalPass, "Customer");
                 try {
-                    customerHelper.addCustomer(finalEmail, name, age, gender);
+                    customerHelper.addCustomer("", finalEmail, name, age, gender);
                     SimpleDialog registerDialog =
                         new SimpleDialog("You have successfully registered your " +
                             customerVal + " user.",

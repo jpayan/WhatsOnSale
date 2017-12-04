@@ -60,7 +60,7 @@ public class RegisterBusinessActivity extends AppCompatActivity {
                 } else {
                     userHelper.addUser(finalEmail, finalPass, "Business");
                     try {
-                        businessHelper.addBusiness(finalEmail, businessName, hqAddress);
+                        businessHelper.addBusiness("", finalEmail, businessName, hqAddress);
                         SimpleDialog registerDialog =
                             new SimpleDialog("You have successfully registered your "
                                 + businessVal + " user.",

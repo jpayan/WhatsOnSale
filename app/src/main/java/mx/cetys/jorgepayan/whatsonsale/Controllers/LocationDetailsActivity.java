@@ -63,7 +63,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
                 locationName = editTextLocationName.getText().toString();
                 locationAddress = editTextLocationAddress.getText().toString();
                 if(locationName.length() > 0 && locationAddress.length() > 0) {
-                    locationHelper.addLocation(locationName,
+                    locationHelper.addLocation("", locationName,
                         BusinessHomeActivity.currentBusiness.getBusinessId(),
                         locationCoordenates.latitude, locationCoordenates.longitude,
                         locationAddress);

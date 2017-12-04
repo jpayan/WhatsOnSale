@@ -67,11 +67,13 @@ public class SaleHelper {
         return saleArray;
     }
 
-    public void addSale(String saleBussinesId, String categoryName, String description, String expiration_date) {
+    public void addSale(String saleId, String saleBussinesId, String categoryName, String description, String expiration_date) {
         open();
         ContentValues values = new ContentValues();
 
-        values.put(DBUtils.SALE_ID, Utils.generateId());
+        saleId = (saleId.isEmpty()) ? Utils.generateId() : saleId;
+
+        values.put(DBUtils.SALE_ID, saleId);
         values.put(DBUtils.SALE_BUSINESS_ID, saleBussinesId);
         values.put(DBUtils.SALE_CATEGORY_NAME, categoryName);
         values.put(DBUtils.SALE_DESCRIPTION, description);
@@ -99,7 +101,9 @@ public class SaleHelper {
     }
 
     public void clearTable() {
+        open();
         database.execSQL("DELETE FROM " + DBUtils.SALE_TABLE_NAME);
+        close();
     }
 
     private Sale parseSale(Cursor cursor) {
