@@ -8,6 +8,16 @@
     android:layout_marginRight="20dp"
     tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.LocationDetailsActivity">
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:text="LOCATION"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -53,16 +63,6 @@
         android:hint="Select Address..."
         android:inputType="textPersonName"
         android:textAlignment="viewStart" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:text="LOCATION"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
     <TextView
         android:id="@+id/txtView_location_address"
