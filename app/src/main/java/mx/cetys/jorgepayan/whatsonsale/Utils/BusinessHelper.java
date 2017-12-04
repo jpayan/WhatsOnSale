@@ -38,7 +38,7 @@ public class BusinessHelper {
     public Business getBusiness(String businessId) {
         open();
         Cursor cursor = database.query(DBUtils.BUSINESS_TABLE_NAME, BUSINESS_TABLE_COLUMNS,
-                DBUtils.BUSINESS_ID + " = " + businessId, null, null, null, null);
+                DBUtils.BUSINESS_ID + " = '" + businessId + "'", null, null, null, null);
 
         cursor.moveToFirst();
         Business user = parseBusiness(cursor);
@@ -59,20 +59,20 @@ public class BusinessHelper {
         return user;
     }
 
-    public long addBusiness(String businessUserEmail, String businessName,
+    public void addBusiness(String businessId, String businessUserEmail, String businessName,
                             String hqAddress) {
         open();
         ContentValues values = new ContentValues();
 
-        values.put(DBUtils.BUSINESS_ID, Utils.generateId().toString());
+        businessId = (businessId.isEmpty()) ? Utils.generateId() : businessId;
+
+        values.put(DBUtils.BUSINESS_ID, businessId);
         values.put(DBUtils.BUSINESS_USER_EMAIL, businessUserEmail);
         values.put(DBUtils.BUSINESS_NAME, businessName);
         values.put(DBUtils.BUSINESS_HQ_ADDRESS, hqAddress);
 
-        long businessId = database.insert(DBUtils.BUSINESS_TABLE_NAME, null, values);
+        database.insert(DBUtils.BUSINESS_TABLE_NAME, null, values);
         close();
-
-        return businessId;
     }
 
     public int updateBusiness(Business business) {

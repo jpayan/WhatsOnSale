@@ -70,11 +70,13 @@ public class LocationHelper {
         return locationArray;
     }
 
-    public void addLocation(String name, String businessId, double latitude, double longitude, String address) {
+    public void addLocation(String locationId, String name, String businessId, double latitude, double longitude, String address) {
         open();
         ContentValues values = new ContentValues();
 
-        values.put(DBUtils.LOCATION_ID, Utils.generateId());
+        locationId = (locationId.isEmpty()) ? Utils.generateId() : locationId;
+
+        values.put(DBUtils.LOCATION_ID, locationId);
         values.put(DBUtils.LOCATION_NAME, name);
         values.put(DBUtils.LOCATION_BUSINESS_ID, businessId);
         values.put(DBUtils.LOCATION_LATITUDE, latitude);

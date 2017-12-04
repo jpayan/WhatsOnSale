@@ -1,5 +1,8 @@
 package mx.cetys.jorgepayan.whatsonsale.Models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by jorge.payan on 11/17/17.
  */
@@ -17,6 +20,19 @@ public class Customer {
         this.name = name;
         this.age = age;
         this.gender = gender;
+    }
+
+    public Customer(JSONObject jsonObject) {
+        try {
+            this.customerId = jsonObject.getString("customer_id");
+            this.userEmail = jsonObject.getString("user_email");
+            this.name = jsonObject.getString("name");
+            this.age = jsonObject.getInt("age");
+            this.gender = jsonObject.getString("gender");
+        }
+        catch(JSONException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public String getCustomerId() {

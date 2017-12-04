@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import mx.cetys.jorgepayan.whatsonsale.Models.Business;
 import mx.cetys.jorgepayan.whatsonsale.R;
 import mx.cetys.jorgepayan.whatsonsale.Utils.BusinessHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
 public class BusinessHomeActivity extends AppCompatActivity {
 
