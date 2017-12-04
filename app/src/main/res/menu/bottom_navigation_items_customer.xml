@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_home"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Home" />
+    <item
+        android:id="@+id/item_reviews"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Reviews" />
+
+    <item
+        android:id="@+id/item_customerSettings"
+        android:icon="@android:drawable/ic_menu_more"
+        android:title="Settings" />
+
+</menu>
