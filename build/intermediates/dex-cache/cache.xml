@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
+        jar="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c1382f4d9665f4d3eebef9aed60ff08153e05255">
+        <dex dex="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_e99241abac66bc3fb0588cff1569e0841d9a10f0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
         <dex dex="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1d9b03305d123b23310eb50483bb123e23e89d49/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="26.0.2"
-        sha1="bb30a1eb182b49f5c62ca06d73f00f6a798e3d5c">
-        <dex dex="/Users/jorge.payan/MobileDev/WhatsOnSale/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_e99241abac66bc3fb0588cff1569e0841d9a10f0/classes.dex" />
     </item>
 
 </items>

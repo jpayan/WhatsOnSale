@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers;
+package mx.cetys.jorgepayan.whatsonsale.Controllers.Activities;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import mx.cetys.jorgepayan.whatsonsale.BuildConfig;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Constants;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.GeofenceErrorMessages;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.GeofenceTransitionsIntentService;
 import mx.cetys.jorgepayan.whatsonsale.R;
 
 public class GeofenceActivity extends AppCompatActivity implements OnCompleteListener<Void> {

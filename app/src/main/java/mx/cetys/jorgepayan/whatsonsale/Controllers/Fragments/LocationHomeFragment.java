@@ -28,6 +28,7 @@ public class LocationHomeFragment extends Fragment {
     public static String CALLING_ACTIVITY = "CALLING_ACTIVITY";
     public static String LOCATION = "LOCATION";
     public static String SUCCESS = "SUCCESS";
+    
     int LOCATION_DETAILS_REQUEST = 1;
 
     LocationHelper locationHelper;
