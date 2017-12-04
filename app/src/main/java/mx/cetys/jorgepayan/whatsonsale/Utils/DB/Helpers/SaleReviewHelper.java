@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Utils;
+package mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import mx.cetys.jorgepayan.whatsonsale.Models.SaleReview;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
 
 /**
  * Created by jorge.payan on 12/1/17.

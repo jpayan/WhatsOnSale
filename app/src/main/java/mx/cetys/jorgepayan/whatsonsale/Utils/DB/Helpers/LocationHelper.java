@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Utils;
+package mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import mx.cetys.jorgepayan.whatsonsale.Models.Location;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
+import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
 /**
  * Created by jorge.payan on 11/17/17.
@@ -70,7 +72,7 @@ public class LocationHelper {
         return locationArray;
     }
 
-    public void addLocation(String locationId, String name, String businessId, double latitude, double longitude, String address) {
+    public String addLocation(String locationId, String name, String businessId, double latitude, double longitude, String address) {
         open();
         ContentValues values = new ContentValues();
 
@@ -85,6 +87,8 @@ public class LocationHelper {
 
         database.insert(DBUtils.LOCATION_TABLE_NAME, null, values);
         close();
+
+        return locationId;
     }
 
     public void updateLocation(Location location) {
@@ -93,19 +97,19 @@ public class LocationHelper {
         values.put(DBUtils.LOCATION_ID, location.getLocationId());
         values.put(DBUtils.LOCATION_NAME, location.getName());
         values.put(DBUtils.LOCATION_BUSINESS_ID, location.getBusinessId());
-        values.put(DBUtils.LOCATION_LATITUDE, location.getLatitude());
-        values.put(DBUtils.LOCATION_LONGITUDE, location.getLongitude());
+        values.put(DBUtils.LOCATION_LATITUDE, Double.valueOf(location.getLatitude()));
+        values.put(DBUtils.LOCATION_LONGITUDE, Double.valueOf(location.getLongitude()));
         values.put(DBUtils.LOCATION_ADDRESS, location.getAddress());
 
         open();
-        database.update(DBUtils.LOCATION_TABLE_NAME, values, DBUtils.LOCATION_ID + " = " +
-                        location.getLocationId(), null);
+        database.update(DBUtils.LOCATION_TABLE_NAME, values, DBUtils.LOCATION_ID + " = '" +
+                        location.getLocationId() + "'", null);
         close();
     }
 
     public void deleteLocation(String locationId) {
         open();
-        database.delete(DBUtils.LOCATION_TABLE_NAME, DBUtils.LOCATION_ID + " = " + locationId,
+        database.delete(DBUtils.LOCATION_TABLE_NAME, DBUtils.LOCATION_ID + " = '" + locationId + "'",
                         null);
         close();
     }

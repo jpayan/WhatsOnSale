@@ -8,23 +8,35 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
-import mx.cetys.jorgepayan.whatsonsale.Controllers.BusinessHomeActivity;
-import mx.cetys.jorgepayan.whatsonsale.Controllers.CustomerHomeActivity;
-import mx.cetys.jorgepayan.whatsonsale.Controllers.MainActivity;
-import mx.cetys.jorgepayan.whatsonsale.Controllers.RegisterBusinessActivity;
-import mx.cetys.jorgepayan.whatsonsale.Controllers.RegisterCustomerActivity;
-import mx.cetys.jorgepayan.whatsonsale.Models.Business;
-import mx.cetys.jorgepayan.whatsonsale.Models.Customer;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.BusinessHomeActivity;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.CustomerHomeActivity;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.MainActivity;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.RegisterBusinessActivity;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.RegisterCustomerActivity;
+import mx.cetys.jorgepayan.whatsonsale.Models.User;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.BusinessHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.CategoryHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.CustomerCategoryHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.CustomerHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.LocationHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleLocationHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleReviewHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.UserHelper;
 
 /**
  * Created by fidel on 12/2/2017.
@@ -214,6 +226,61 @@ public class Utils {
         queue.add(getAll("sale_review", context));
     }
 
+    public static void post(final String entity, final Context context,
+                            HashMap<String, String> params) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        String url = api + entity;
+
+        JsonObjectRequest post = new JsonObjectRequest(url, new JSONObject(params),
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        VolleyLog.v("Response:%n %s", response.toString(4));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                }
+            }
+        );
+        queue.add(post);
+    }
+
+    public static void delete(final String entity, final Context context, ArrayList<String> params,
+                              final FragmentManager fm) {
+        RequestQueue queue = Volley.newRequestQueue(context);
+
+        String url = api + entity;
+        for (String param : params) {
+            url += "/" + param;
+        }
+
+        StringRequest dr = new StringRequest(Request.Method.DELETE, url,
+            new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response) {
+                    new SimpleDialog("Item deleted successfully.", "Ok").show(fm, "Alert Dialog");
+                }
+            },
+            new Response.ErrorListener()
+            {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println(error.getMessage());
+                }
+            }
+        );
+        queue.add(dr);
+
+    }
+
     public static String generateId(){
         return UUID.randomUUID().toString();
     }
@@ -222,6 +289,11 @@ public class Utils {
         Intent intent = new Intent(context, cls);
         intent.putExtra(MainActivity.MAIN_EMAIL, values[0]);
         intent.putExtra(MainActivity.MAIN_PASS, values[1]);
+        context.startActivity(intent);
+    }
+
+    public static void goToIntent(Context context, Class<?> cls) {
+        Intent intent = new Intent(context, cls);
         context.startActivity(intent);
     }
 
@@ -243,6 +315,7 @@ public class Utils {
             if (business) {
                 if (userHelper.userExists(email, "business")) {
                     if (userHelper.validateCredentials(email, password)) {
+                        MainActivity.currentUser = new User(email, password, "business");
                         goToIntent(context, BusinessHomeActivity.class,
                             new String[]{email, password});
                     } else {
@@ -254,6 +327,7 @@ public class Utils {
             } else {
                 if (userHelper.userExists(email, "customer")) {
                     if (userHelper.validateCredentials(email, password)) {
+                        MainActivity.currentUser = new User(email, password, "customer");
                         goToIntent(context, CustomerHomeActivity.class,
                             new String[]{email, password});
                     } else {
@@ -270,7 +344,7 @@ public class Utils {
                                 boolean business) {
 
         final SimpleDialog emptyFieldsDialog =
-                new SimpleDialog("Fill up all the fields before logging in or registering.", "Ok");
+            new SimpleDialog("Fill up all the fields before logging in or registering.", "Ok");
         final SimpleDialog existingUserDialog =
             new SimpleDialog("A user with this email has already been registered.\nIf the user " +
                 "registered with that email belongs to you, press the login button.", "Ok");

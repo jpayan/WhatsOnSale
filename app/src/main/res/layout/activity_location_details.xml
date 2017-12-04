@@ -4,19 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.LocationDetailsActivity">
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.LocationDetailsActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="77dp"
+        android:text="SAVE" />
 
     <EditText
         android:id="@+id/edit_txt_locationName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView5"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/txtView_location_name"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:ems="10"
         android:hint="Type name..."
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textAlignment="viewStart" />
 
     <TextView
         android:id="@+id/txtView_location_name"
@@ -24,19 +37,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView5"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="40dp"
         android:text="Location Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
     <EditText
         android:id="@+id/edit_text_locationAddress"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/edit_txt_locationName"
         android:layout_below="@+id/txtView_location_address"
+        android:layout_centerHorizontal="true"
+        android:cursorVisible="false"
+        android:editable="false"
         android:ems="10"
-        android:hint="Type address..."
-        android:inputType="textPersonName" />
+        android:hint="Select Address..."
+        android:inputType="textPersonName"
+        android:textAlignment="viewStart" />
 
     <TextView
         android:id="@+id/textView5"
@@ -54,6 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_txt_locationName"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:text="Location Address"
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
@@ -61,8 +78,17 @@
         android:id="@+id/btn_saveLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="77dp"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_alignStart="@+id/button"
         android:text="SAVE" />
+
+    <Button
+        android:id="@+id/btn_deleteLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_alignStart="@+id/button"
+        android:layout_marginBottom="28dp"
+        android:text="Delete" />
 </RelativeLayout>

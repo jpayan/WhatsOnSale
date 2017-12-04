@@ -5,13 +5,15 @@
     android:id="@+id/activity_customer_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.CustomerHomeActivity">
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.CustomerHomeActivity">
 
     <FrameLayout
         android:id="@+id/customer_frame_layout"
         android:name="mx.cetys.jorgepayan.whatsonsale.Controllers.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"></FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/customer_navigation"

@@ -2,8 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:orientation="vertical"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.BusinessSettingsFragment">
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.BusinessSettingsFragment">
 
     <TextView
         android:id="@+id/txtView_settings"
@@ -21,8 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+        android:cursorVisible="false"
+        android:editable="false"
         android:ems="10"
-        android:inputType="textEmailAddress" />
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/common_action_bar_splitter" />
 
     <EditText
         android:id="@+id/edit_text_updateBusinessName"
@@ -30,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:ems="10"
+        android:hint="Business Name"
         android:inputType="text" />
 
     <EditText
@@ -38,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:ems="10"
+        android:hint="HQ Address"
         android:inputType="text" />
 
     <Button
@@ -46,14 +54,15 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:text="Update" />
+
     <Button
         android:id="@+id/btn_updatePasword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:background="@android:color/holo_blue_dark"
-        android:textColor="@android:color/white"
-        android:text="Change password" />
+        android:text="Change password"
+        android:textColor="@android:color/white" />
 
 
 </LinearLayout>

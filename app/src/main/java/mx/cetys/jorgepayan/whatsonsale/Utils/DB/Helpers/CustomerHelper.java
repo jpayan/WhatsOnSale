@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Utils;
+package mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import mx.cetys.jorgepayan.whatsonsale.Models.Customer;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
+import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
 /**
  * Created by jorge.payan on 11/17/17.
@@ -49,7 +51,7 @@ public class CustomerHelper {
         return customer;
     }
 
-    public void addCustomer(String customerId, String userEmail, String name, int age, String gender) {
+    public String addCustomer(String customerId, String userEmail, String name, int age, String gender) {
         open();
         ContentValues values = new ContentValues();
 
@@ -63,6 +65,8 @@ public class CustomerHelper {
 
         database.insert(DBUtils.CUSTOMER_TABLE_NAME, null, values);
         close();
+
+        return customerId;
     }
 
     public int updateCustomer(Customer customer) {

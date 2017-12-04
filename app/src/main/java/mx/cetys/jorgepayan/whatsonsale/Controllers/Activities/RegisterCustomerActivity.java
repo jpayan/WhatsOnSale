@@ -1,6 +1,5 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers;
+package mx.cetys.jorgepayan.whatsonsale.Controllers.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,13 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import mx.cetys.jorgepayan.whatsonsale.Models.Customer;
+import java.util.HashMap;
+
+import mx.cetys.jorgepayan.whatsonsale.Models.User;
 import mx.cetys.jorgepayan.whatsonsale.R;
-import mx.cetys.jorgepayan.whatsonsale.Utils.CustomerHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.CustomerHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
-import mx.cetys.jorgepayan.whatsonsale.Utils.UserHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.UserHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
 public class RegisterCustomerActivity extends AppCompatActivity {
     public static final String REGISTER_SUCCESS = "SUCCESSFULLY REGISTERED";
@@ -50,30 +51,50 @@ public class RegisterCustomerActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            String finalEmail = editTextEmail.getText().toString();
-            String finalPass = editTextPassword.getText().toString();
-            String name = editTextCustomerName.getText().toString();
-            int age = Integer.parseInt(editTextCustomerAge.getText().toString());
-            String gender = editTextCustomerGender.getText().toString();
+            final String finalEmail = editTextEmail.getText().toString();
+            final String finalPass = editTextPassword.getText().toString();
+            final String name = editTextCustomerName.getText().toString();
+            final int age = Integer.parseInt(editTextCustomerAge.getText().toString());
+            final String gender = editTextCustomerGender.getText().toString();
 
-            if (userHelper.userExists(finalEmail, "Customer")) {
+            if (userHelper.userExists(finalEmail, "customer")) {
                 final SimpleDialog existingUserDialog =
                     new SimpleDialog("A user with this email has already been registered." +
                         "\nIf the user registered with that email belongs to you, press the " +
                         "login button.", "Ok");
+
                 FragmentManager fm = getSupportFragmentManager();
+
                 existingUserDialog.show(fm, "Alert Dialog Fragment");
             } else {
-                userHelper.addUser(finalEmail, finalPass, "Customer");
+                userHelper.addUser(finalEmail, finalPass, "customer");
+
+                MainActivity.currentUser = new User(finalEmail, finalPass, "customer");
+
+                Utils.post("user", getApplicationContext(), new HashMap<String, String>() {{
+                    put("email", finalEmail); put("password", finalPass);
+                    put("type", "customer");
+                }});
+
                 try {
-                    customerHelper.addCustomer("", finalEmail, name, age, gender);
+                    final String customerId = customerHelper.addCustomer("", finalEmail, name, age,
+                        gender);
+
+                    Utils.post("business", getApplicationContext(),
+                            new HashMap<String, String>() {{ put("customer_id", customerId);
+                                put("name", name); put("age", String.valueOf(age));
+                                put("gender", gender); put("user_email", finalEmail);
+                            }});
+
                     SimpleDialog registerDialog =
                         new SimpleDialog("You have successfully registered your " +
                             customerVal + " user.",
                             "Ok", null, getApplicationContext(), CustomerHomeActivity.class,
                             new String[]{REGISTER_SUCCESS},
                             new String[]{finalEmail});
+
                     FragmentManager fm = getSupportFragmentManager();
+
                     registerDialog.show(fm, "Alert Dialog Fragment");
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -81,5 +102,10 @@ public class RegisterCustomerActivity extends AppCompatActivity {
             }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

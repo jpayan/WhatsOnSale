@@ -22,18 +22,6 @@ public class Business {
         this.hqAddress = hqAddress;
     }
 
-    public Business(JSONObject jsonObject) {
-        try {
-            this.businessId = jsonObject.getString("business_id");
-            this.userEmail = jsonObject.getString("user_email");
-            this.businessName = jsonObject.getString("business_name");
-            this.hqAddress = jsonObject.getString("hq_address");
-        }
-        catch(JSONException e){
-
-        }
-    }
-
     public String getBusinessId() {
         return businessId;
     }
@@ -42,11 +30,11 @@ public class Business {
         this.businessId = businessId;
     }
 
-    public String getuserEmail() {
+    public String getUserEmail() {
         return userEmail;
     }
 
-    public void setuserEmail(String userEmail) {
+    public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
 

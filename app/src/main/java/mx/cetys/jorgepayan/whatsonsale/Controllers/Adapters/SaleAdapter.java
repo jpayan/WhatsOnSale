@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers;
+package mx.cetys.jorgepayan.whatsonsale.Controllers.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -32,9 +32,9 @@ public class SaleAdapter extends ArrayAdapter<Sale> {
         TextView saleCategoryName = (TextView) oView.findViewById(R.id.text_view_saleCategoryName);
 
         Sale sale = this.getItem(position);
-        saleDescription.setText("Sale Description: " + sale.getDescription());
-        saleExporationDate.setText("Expiration Date: " + sale.getExpirationDate());
-        saleCategoryName.setText("Category Name: " + sale.getcategoryName());
+        saleDescription.setText(sale.getDescription());
+        saleExporationDate.setText(sale.getExpirationDate());
+        saleCategoryName.setText(sale.getCategoryName());
 
         return oView;
     }

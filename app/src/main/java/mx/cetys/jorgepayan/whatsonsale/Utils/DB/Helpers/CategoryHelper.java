@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Utils;
+package mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 import mx.cetys.jorgepayan.whatsonsale.Models.Category;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
 
 /**
  * Created by jorge.payan on 12/3/17.
@@ -32,17 +35,20 @@ public class CategoryHelper {
         dbHelper.close();
     }
 
-    public Category getCategory(int categoryId) {
+    public ArrayList<String> getAllCategories() {
+        ArrayList<String> categories = new ArrayList<>();
         open();
-        Cursor cursor = database.query(DBUtils.CATEGORY_TABLE_NAME, CATEGORY_TABLE_COLUMNS,
-                DBUtils.CATEGORY_NAME + " = '" + categoryId + "'", null, null, null, null);
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DBUtils.CATEGORY_TABLE_NAME, null);
 
         cursor.moveToFirst();
-        Category category = parseCategory(cursor);
+        while(!cursor.isAfterLast()){
+            categories.add(parseCategory(cursor).getName());
+            cursor.moveToNext();
+        }
         cursor.close();
         close();
 
-        return category;
+        return categories;
     }
 
     public void addCategory(String name) {
@@ -52,24 +58,6 @@ public class CategoryHelper {
         values.put(DBUtils.CATEGORY_NAME, name);
 
         database.insert(DBUtils.CATEGORY_TABLE_NAME, null, values);
-        close();
-    }
-
-    public void updateCategory(Category category) {
-        open();
-        ContentValues values = new ContentValues();
-
-        values.put(DBUtils.CATEGORY_NAME, category.getName());
-
-        database.update(DBUtils.CATEGORY_TABLE_NAME, values, DBUtils.CATEGORY_NAME + " = '" +
-                        category.getName() + "'", null);
-        close();
-    }
-
-    public void deleteCategory(int categoryId) {
-        open();
-        database.delete(DBUtils.CATEGORY_TABLE_NAME, DBUtils.CATEGORY_NAME + " = '" + categoryId +
-                        "'", null);
         close();
     }
 

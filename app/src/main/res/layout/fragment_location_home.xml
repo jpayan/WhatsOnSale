@@ -1,63 +1,61 @@
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.LocationHomeFragment">-->
-
-    <!--<ListView-->
-        <!--android:id="@+id/list_view_locations"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dip"-->
-        <!--android:layout_weight="1"/>-->
-
-    <!--&lt;!&ndash;<Button&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/btn_addLocation"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:text="Add Location"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_below="@+id/edit_text_location"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_weight="0"/>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<android.support.design.widget.FloatingActionButton&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/floatingActionButton"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:clickable="true"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:backgroundTint="@color/common_action_bar_splitter"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:fabSize="normal"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:rippleColor="@android:color/holo_green_light"&ndash;&gt;-->
-        <!--&lt;!&ndash;app:srcCompat="@android:drawable/ic_menu_compass" />&ndash;&gt;-->
-
-<!--</LinearLayout>-->
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.LocationHomeFragment" >
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.LocationHomeFragment" >
 
-       <ListView
-        android:id="@+id/list_view_location"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:weightSum="12"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp" >
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_addLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:visibility="visible"
-        app:backgroundTint="@color/common_signin_btn_dark_text_default"
-        app:elevation="5dp"
-        app:fabSize="normal"
-        app:rippleColor="@color/common_signin_btn_dark_text_default"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Location Name"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:textSize="14dp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:text="Location Address"
+            android:textColor="@android:color/black"
+            android:textSize="14dp"
+            android:gravity="center_horizontal" />
+    </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/list_view_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</FrameLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_addLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="true"
+            android:visibility="visible"
+            app:backgroundTint="@color/common_signin_btn_dark_text_default"
+            app:elevation="5dp"
+            app:fabSize="normal"
+            app:rippleColor="@color/common_signin_btn_dark_text_default"
+            app:srcCompat="@android:drawable/ic_input_add" />
+    </FrameLayout>
+
+</LinearLayout>

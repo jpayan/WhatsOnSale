@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers;
+package mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +12,12 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import mx.cetys.jorgepayan.whatsonsale.Models.Location;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.BusinessHomeActivity;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.SaleDetailsActivity;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Adapters.SaleAdapter;
 import mx.cetys.jorgepayan.whatsonsale.Models.Sale;
 import mx.cetys.jorgepayan.whatsonsale.R;
-import mx.cetys.jorgepayan.whatsonsale.Utils.LocationHelper;
-import mx.cetys.jorgepayan.whatsonsale.Utils.SaleHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
 
 import static android.app.Activity.RESULT_OK;
@@ -28,8 +29,7 @@ public class SaleHomeFragment extends Fragment {
     ListView listViewSale;
 
     public static SaleHomeFragment newInstance() {
-        SaleHomeFragment fragment = new SaleHomeFragment();
-        return fragment;
+        return new SaleHomeFragment();
     }
 
     @Override
