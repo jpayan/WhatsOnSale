@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button btnLogIn = (Button) findViewById(R.id.btn_log_in);
         final Button btnRegister = (Button) findViewById(R.id.btn_register);
+        final Button btnAdmin = (Button) findViewById(R.id.btn_admin);
         final EditText editTextEmail = (EditText) findViewById(R.id.edit_text_email);
         final EditText editTextPassword = (EditText) findViewById(R.id.edit_text_password);
         final RadioButton radioButtonBusiness =
@@ -49,5 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        btnAdmin.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.goToIntent(getApplicationContext(),GeofenceActivity.class);
+            }
+        } );
     }
 }
