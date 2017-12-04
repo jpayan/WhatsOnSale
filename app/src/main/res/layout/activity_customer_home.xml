@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_customer_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.CustomerHomeActivity">
 
-    <fragment
-        android:id="@+id/map"
+    <FrameLayout
+        android:id="@+id/customer_frame_layout"
         android:name="mx.cetys.jorgepayan.whatsonsale.Controllers.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"></FrameLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/customer_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:menu="@menu/bottom_navigation_items_customer"/>
+
+</RelativeLayout>

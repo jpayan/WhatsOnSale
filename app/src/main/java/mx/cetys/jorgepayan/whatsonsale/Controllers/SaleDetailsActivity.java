@@ -65,20 +65,20 @@ public class SaleDetailsActivity extends AppCompatActivity {
         } );
 
         editTextSaleExpirationDate.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar mcurrentDate=Calendar.getInstance();
-                int mYear=mcurrentDate.get(Calendar.YEAR);
-                int mMonth=mcurrentDate.get(Calendar.MONTH);
-                int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+        @Override
+        public void onClick(View view) {
+            Calendar mcurrentDate=Calendar.getInstance();
+            int mYear=mcurrentDate.get(Calendar.YEAR);
+            int mMonth=mcurrentDate.get(Calendar.MONTH);
+            int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog mDatePicker=new DatePickerDialog(SaleDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                        editTextSaleExpirationDate.setText(selectedmonth+1 + "/" + selectedday + "/" + selectedyear );
-                    }
-                },mYear, mMonth, mDay);
-                mDatePicker.setTitle("Select expiration date");
-                mDatePicker.show();  }
-        } );
-    }
+            DatePickerDialog mDatePicker=new DatePickerDialog(SaleDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                    editTextSaleExpirationDate.setText(selectedmonth+1 + "/" + selectedday + "/" + selectedyear );
+                }
+            },mYear, mMonth, mDay);
+            mDatePicker.setTitle("Select expiration date");
+            mDatePicker.show();  }
+    } );
+}
 }
