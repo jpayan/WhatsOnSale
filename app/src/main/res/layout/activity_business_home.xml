@@ -6,13 +6,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.BusinessHomeActivity">
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.BusinessHomeActivity">
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/navigation"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:animateLayoutChanges="true">
 
     </FrameLayout>

@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers;
+package mx.cetys.jorgepayan.whatsonsale.Controllers.Activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.BusinessSettingsFragment;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.LocationHomeFragment;
+import mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.SaleHomeFragment;
 import mx.cetys.jorgepayan.whatsonsale.Models.Business;
 import mx.cetys.jorgepayan.whatsonsale.R;
-import mx.cetys.jorgepayan.whatsonsale.Utils.BusinessHelper;
-import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.BusinessHelper;
 
 public class BusinessHomeActivity extends AppCompatActivity {
 
@@ -59,5 +61,10 @@ public class BusinessHomeActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_layout, LocationHomeFragment.newInstance());
         transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

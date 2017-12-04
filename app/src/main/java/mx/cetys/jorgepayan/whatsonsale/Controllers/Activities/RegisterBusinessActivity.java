@@ -1,6 +1,5 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers;
+package mx.cetys.jorgepayan.whatsonsale.Controllers.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import java.util.HashMap;
+
+import mx.cetys.jorgepayan.whatsonsale.Models.User;
 import mx.cetys.jorgepayan.whatsonsale.R;
-import mx.cetys.jorgepayan.whatsonsale.Utils.BusinessHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.BusinessHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
-import mx.cetys.jorgepayan.whatsonsale.Utils.UserHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.UserHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
 public class RegisterBusinessActivity extends AppCompatActivity {
     public static final String REGISTER_SUCCESS = "SUCCESSFULLY REGISTERED";
@@ -45,22 +47,40 @@ public class RegisterBusinessActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String finalEmail = editTextEmail.getText().toString();
-                String finalPass = editTextPassword.getText().toString();
-                String businessName = editTextBusinessName.getText().toString();
-                String hqAddress = editTextHQAddress.getText().toString();
+                final String finalEmail = editTextEmail.getText().toString();
+                final String finalPass = editTextPassword.getText().toString();
+                final String businessName = editTextBusinessName.getText().toString();
+                final String hqAddress = editTextHQAddress.getText().toString();
 
-                if (userHelper.userExists(finalEmail, "Business")) {
+                if (userHelper.userExists(finalEmail, "business")) {
                     final SimpleDialog existingUserDialog =
                         new SimpleDialog("A user with this email has already been registered." +
                             "\nIf the user registered with that email belongs to you, press the " +
                             "login button.", "Ok");
+
                     FragmentManager fm = getSupportFragmentManager();
+
                     existingUserDialog.show(fm, "Alert Dialog Fragment");
                 } else {
-                    userHelper.addUser(finalEmail, finalPass, "Business");
+                    userHelper.addUser(finalEmail, finalPass, "business");
+
+                    MainActivity.currentUser = new User(finalEmail, finalPass, "business");
+
+                    Utils.post("user", getApplicationContext(), new HashMap<String, String>() {{
+                        put("email", finalEmail); put("password", finalPass);
+                        put("type", "business");
+                    }});
+
                     try {
-                        businessHelper.addBusiness("", finalEmail, businessName, hqAddress);
+                        final String businessId = businessHelper.addBusiness("", finalEmail,
+                            businessName, hqAddress);
+
+                        Utils.post("business", getApplicationContext(),
+                            new HashMap<String, String>() {{ put("business_id", businessId);
+                            put("business_name", businessName); put("hq_address", hqAddress);
+                            put("user_email", finalEmail);
+                        }});
+
                         SimpleDialog registerDialog =
                             new SimpleDialog("You have successfully registered your "
                                 + businessVal + " user.",
@@ -75,5 +95,10 @@ public class RegisterBusinessActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

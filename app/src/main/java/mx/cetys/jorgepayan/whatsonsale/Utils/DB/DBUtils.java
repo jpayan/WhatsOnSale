@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Utils;
+package mx.cetys.jorgepayan.whatsonsale.Utils.DB;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

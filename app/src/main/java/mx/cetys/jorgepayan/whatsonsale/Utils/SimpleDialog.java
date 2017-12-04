@@ -8,9 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import mx.cetys.jorgepayan.whatsonsale.Controllers.MainActivity;
-import mx.cetys.jorgepayan.whatsonsale.R;
-
 /**
  * Created by jorge.payan on 11/20/17.
  */

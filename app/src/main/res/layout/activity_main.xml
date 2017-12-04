@@ -7,7 +7,7 @@
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:orientation="vertical"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.MainActivity">
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.MainActivity">
 
     <TextView
         android:id="@+id/textView"

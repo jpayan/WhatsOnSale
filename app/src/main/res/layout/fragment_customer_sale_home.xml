@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.CustomerSaleHomeFragment">
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.CustomerSaleHomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

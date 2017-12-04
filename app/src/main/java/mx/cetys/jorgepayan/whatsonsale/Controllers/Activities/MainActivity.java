@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers;
+package mx.cetys.jorgepayan.whatsonsale.Controllers.Activities;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;

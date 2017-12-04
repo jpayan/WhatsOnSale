@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Utils;
+package mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import mx.cetys.jorgepayan.whatsonsale.Models.Sale;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
+import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
 /**
  * Created by jorge.payan on 11/17/17.
@@ -54,7 +56,7 @@ public class SaleHelper {
 
         open();
         Cursor cursor = database.query(DBUtils.SALE_TABLE_NAME, SALE_TABLE_COLUMNS,
-                DBUtils.SALE_BUSINESS_ID + " = '" + businessId+"'", null, null, null, null);
+                DBUtils.SALE_BUSINESS_ID + " = '" + businessId + "'", null, null, null, null);
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
@@ -67,7 +69,7 @@ public class SaleHelper {
         return saleArray;
     }
 
-    public void addSale(String saleId, String saleBussinesId, String categoryName, String description, String expiration_date) {
+    public String addSale(String saleId, String saleBussinesId, String categoryName, String description, String expiration_date) {
         open();
         ContentValues values = new ContentValues();
 
@@ -81,13 +83,15 @@ public class SaleHelper {
 
         database.insert(DBUtils.SALE_TABLE_NAME, null, values);
         close();
+
+        return saleId;
     }
 
     public void updateSale(Sale Sale) {
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.SALE_ID, Sale.getSaleId());
-        values.put(DBUtils.SALE_CATEGORY_NAME, Sale.getcategoryName());
+        values.put(DBUtils.SALE_CATEGORY_NAME, Sale.getCategoryName());
         values.put(DBUtils.SALE_DESCRIPTION, Sale.getDescription());
         values.put(DBUtils.SALE_EXPIRATION_DATE, Sale.getExpirationDate());
 
@@ -108,7 +112,7 @@ public class SaleHelper {
 
     private Sale parseSale(Cursor cursor) {
 
-        String SaleId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_ID));
+        String saleId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_ID));
         String saleBusinessId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_BUSINESS_ID ));
         String categoryName = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_CATEGORY_NAME));
         String description = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_DESCRIPTION));
@@ -116,6 +120,6 @@ public class SaleHelper {
                 cursor.getString(cursor.getColumnIndex(DBUtils.SALE_EXPIRATION_DATE));
 
 
-        return new Sale(SaleId, saleBusinessId, categoryName, description, expirationdate);
+        return new Sale(saleId, saleBusinessId, categoryName, description, expirationdate);
     }
 }

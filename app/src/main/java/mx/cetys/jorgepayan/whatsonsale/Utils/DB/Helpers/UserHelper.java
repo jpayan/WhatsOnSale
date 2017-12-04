@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Utils;
+package mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import mx.cetys.jorgepayan.whatsonsale.Models.User;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
 
 /**
  * Created by jorge.payan on 11/17/17.

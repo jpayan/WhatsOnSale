@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers;
+package mx.cetys.jorgepayan.whatsonsale.Controllers.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -29,8 +29,9 @@ public class LocationAdapter extends ArrayAdapter<Location> {
         TextView locationAddress = (TextView) view.findViewById(R.id.text_view_locationAddress);
 
         Location location = this.getItem(position);
-        locationName.setText("Location Name: " + location.getName());
-        locationAddress.setText("Location Address: " + location.getAddress());
+
+        locationName.setText(location.getName());
+        locationAddress.setText(location.getAddress());
 
         return view;
     }

@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Utils;
+package mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import mx.cetys.jorgepayan.whatsonsale.Models.Business;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
+import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
 /**
  * Created by jorge.payan on 11/17/17.
@@ -59,7 +61,7 @@ public class BusinessHelper {
         return user;
     }
 
-    public void addBusiness(String businessId, String businessUserEmail, String businessName,
+    public String addBusiness(String businessId, String businessUserEmail, String businessName,
                             String hqAddress) {
         open();
         ContentValues values = new ContentValues();
@@ -73,6 +75,8 @@ public class BusinessHelper {
 
         database.insert(DBUtils.BUSINESS_TABLE_NAME, null, values);
         close();
+
+        return businessId;
     }
 
     public int updateBusiness(Business business) {
@@ -80,12 +84,12 @@ public class BusinessHelper {
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.BUSINESS_ID, business.getBusinessId());
-        values.put(DBUtils.BUSINESS_USER_EMAIL, business.getuserEmail());
+        values.put(DBUtils.BUSINESS_USER_EMAIL, business.getUserEmail());
         values.put(DBUtils.BUSINESS_NAME, business.getBusinessName());
         values.put(DBUtils.BUSINESS_HQ_ADDRESS, business.getHqAddress());
 
-        int response = database.update(DBUtils.BUSINESS_TABLE_NAME, values, DBUtils.BUSINESS_ID + " = " +
-            business.getuserEmail(), null);
+        int response = database.update(DBUtils.BUSINESS_TABLE_NAME, values, DBUtils.BUSINESS_ID +
+            " = '" + business.getUserEmail() + "'", null);
         close();
         return response;
     }
