@@ -43,6 +43,9 @@ public class BusinessHomeActivity extends AppCompatActivity {
                         case R.id.item_sale:
                             selectedFragment = SaleHomeFragment.newInstance();
                             break;
+                        case R.id.item_businessSettings:
+                            selectedFragment = BusinessSettingsFragment.newInstance();
+                            break;
                     }
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_layout, selectedFragment);

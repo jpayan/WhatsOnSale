@@ -8,4 +8,9 @@
         android:id="@+id/item_sale"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="@string/sale" />
+
+    <item
+        android:id="@+id/item_businessSettings"
+        android:icon="@android:drawable/ic_menu_more"
+        android:title="Settings" />
 </menu>
