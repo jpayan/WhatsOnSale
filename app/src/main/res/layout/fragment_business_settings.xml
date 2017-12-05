@@ -19,7 +19,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/edit_text_updateBusinessemail"
+        android:id="@+id/edit_text_updateBusinessSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -28,7 +28,7 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textColor="@color/common_action_bar_splitter" />
+        android:textColor="@color/common_google_signin_btn_text_dark_disabled" />
 
     <EditText
         android:id="@+id/edit_text_updateBusinessName"
