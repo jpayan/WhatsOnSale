@@ -12,13 +12,12 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.LocationHomeFragment;
-import mx.cetys.jorgepayan.whatsonsale.Models.Location;
+import mx.cetys.jorgepayan.whatsonsale.Models.BusinessLocation;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.LocationHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
 import mx.cetys.jorgepayan.whatsonsale.R;
@@ -33,7 +32,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
     Button btnDeleteLocation;
 
     LocationHelper locationHelper;
-    Location location = new Location();
+    BusinessLocation businessLocation = new BusinessLocation();
 
     boolean edit = false;
 
@@ -56,11 +55,11 @@ public class LocationDetailsActivity extends AppCompatActivity {
             btnDeleteLocation.setClickable(false);
         } else {
             edit = true;
-            location = fromActivity.getParcelableExtra(LocationHomeFragment.LOCATION);
-            System.out.println("Location");
-            System.out.println(location);
-            editTextLocationName.setText(location.getName());
-            editTextLocationAddress.setText(location.getAddress());
+            businessLocation = fromActivity.getParcelableExtra(LocationHomeFragment.LOCATION);
+            System.out.println("BusinessLocation");
+            System.out.println(businessLocation);
+            editTextLocationName.setText(businessLocation.getName());
+            editTextLocationAddress.setText(businessLocation.getAddress());
         }
 
         final FragmentManager fm = getSupportFragmentManager();
@@ -85,24 +84,24 @@ public class LocationDetailsActivity extends AppCompatActivity {
         btnSaveLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                location.setName(editTextLocationName.getText().toString());
+                businessLocation.setName(editTextLocationName.getText().toString());
 
-                if(location.getName().length() > 0 && location.getAddress().length() > 0) {
-                    final String locationId = (edit) ? location.getLocationId() :
-                        locationHelper.addLocation("", location.getName(),
+                if(businessLocation.getName().length() > 0 && businessLocation.getAddress().length() > 0) {
+                    final String locationId = (edit) ? businessLocation.getLocationId() :
+                        locationHelper.addLocation("", businessLocation.getName(),
                         BusinessHomeActivity.currentBusiness.getBusinessId(),
-                        location.getLatitude(), location.getLongitude(),
-                        location.getAddress());
+                        businessLocation.getLatitude(), businessLocation.getLongitude(),
+                        businessLocation.getAddress());
 
                     if (edit) {
-                        locationHelper.updateLocation(location);
+                        locationHelper.updateLocation(businessLocation);
                     }
 
                     Utils.post("location", getApplicationContext(), new HashMap<String, String>(){{
-                        put("address", location.getAddress());
-                        put("location_name", location.getName());
-                        put("latitude", String.valueOf(location.getLatitude()));
-                        put("longitude", String.valueOf(location.getLongitude()));
+                        put("address", businessLocation.getAddress());
+                        put("location_name", businessLocation.getName());
+                        put("latitude", String.valueOf(businessLocation.getLatitude()));
+                        put("longitude", String.valueOf(businessLocation.getLongitude()));
                         put("business_id", BusinessHomeActivity.currentBusiness.getBusinessId());
                         put("location_id", locationId);
                     }});
@@ -114,7 +113,7 @@ public class LocationDetailsActivity extends AppCompatActivity {
                 } else {
                      SimpleDialog emptyFieldsDialog =
                          new SimpleDialog(
-                             "Fill up all the fields before saving the location.", "Ok");
+                             "Fill up all the fields before saving the businessLocation.", "Ok");
                     emptyFieldsDialog.show(fm, "Alert Dialog Fragment");
                 }
             }
@@ -124,10 +123,10 @@ public class LocationDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                locationHelper.deleteLocation(location.getLocationId());
+                locationHelper.deleteLocation(businessLocation.getLocationId());
 
-                Utils.delete("location", getApplicationContext(), new ArrayList<String>() {{
-                    add(location.getLocationId());
+                Utils.delete("businessLocation", getApplicationContext(), new ArrayList<String>() {{
+                    add(businessLocation.getLocationId());
                 }}, fm);
 
                 Intent data = new Intent();
@@ -143,11 +142,11 @@ public class LocationDetailsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
 
-                location.setAddress((String) place.getAddress());
-                location.setLatitude(place.getLatLng().latitude);
-                location.setLongitude(place.getLatLng().longitude);
+                businessLocation.setAddress((String) place.getAddress());
+                businessLocation.setLatitude(place.getLatLng().latitude);
+                businessLocation.setLongitude(place.getLatLng().longitude);
 
-                editTextLocationAddress.setText(location.getAddress());
+                editTextLocationAddress.setText(businessLocation.getAddress());
             }
         }
     }

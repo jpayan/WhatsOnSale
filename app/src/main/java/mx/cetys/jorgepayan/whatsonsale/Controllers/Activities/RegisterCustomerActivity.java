@@ -80,7 +80,7 @@ public class RegisterCustomerActivity extends AppCompatActivity {
                     final String customerId = customerHelper.addCustomer("", finalEmail, name, age,
                         gender);
 
-                    Utils.post("business", getApplicationContext(),
+                    Utils.post("customer", getApplicationContext(),
                             new HashMap<String, String>() {{ put("customer_id", customerId);
                                 put("name", name); put("age", String.valueOf(age));
                                 put("gender", gender); put("user_email", finalEmail);

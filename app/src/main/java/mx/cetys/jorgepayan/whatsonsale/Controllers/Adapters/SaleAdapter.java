@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import mx.cetys.jorgepayan.whatsonsale.Models.Location;
 import mx.cetys.jorgepayan.whatsonsale.Models.Sale;
 import mx.cetys.jorgepayan.whatsonsale.R;
 

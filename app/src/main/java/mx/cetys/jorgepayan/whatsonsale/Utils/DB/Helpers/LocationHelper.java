@@ -5,10 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 
-import mx.cetys.jorgepayan.whatsonsale.Models.Location;
+import mx.cetys.jorgepayan.whatsonsale.Models.BusinessLocation;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
 import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
@@ -41,21 +42,60 @@ public class LocationHelper {
         dbHelper.close();
     }
 
-    public Location getLocation(String locationId) {
+    public BusinessLocation getLocation(String locationId) {
         open();
         Cursor cursor = database.query(DBUtils.LOCATION_TABLE_NAME, LOCATION_TABLE_COLUMNS,
                 DBUtils.LOCATION_ID + " = " + locationId, null, null, null, null);
 
         cursor.moveToFirst();
-        Location location = parseLocation(cursor);
+        BusinessLocation businessLocation = parseLocation(cursor);
         cursor.close();
         close();
 
-        return location;
+        return businessLocation;
     }
 
-    public ArrayList<Location> getBusinessLocations(String businessId) {
-        ArrayList<Location> locationArray = new ArrayList<>();
+    public ArrayList<BusinessLocation> getLocationsByIds(ArrayList<String> locationIds) {
+        ArrayList<BusinessLocation> locations = new ArrayList<>();
+        if (!locationIds.isEmpty()) {
+            String locationIdsGroup = "(";
+            for (String locationId : locationIds) {
+                locationIdsGroup += String.format("'%s',", locationId);
+            }
+            locationIdsGroup = locationIdsGroup.replaceFirst(".$","") + ")";
+            open();
+            Cursor cursor = database.query(DBUtils.LOCATION_TABLE_NAME, LOCATION_TABLE_COLUMNS,
+                    DBUtils.LOCATION_ID + " IN " + locationIdsGroup, null, null, null, null);
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                locations.add(parseLocation(cursor));
+                cursor.moveToNext();
+            }
+            cursor.close();
+            close();
+        }
+        return locations;
+    }
+
+    public ArrayList<BusinessLocation> getAllLocations() {
+        ArrayList<BusinessLocation> businessLocations = new ArrayList<>();
+        open();
+        Cursor cursor = database.query(DBUtils.LOCATION_TABLE_NAME, LOCATION_TABLE_COLUMNS, null,
+            null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            businessLocations.add(parseLocation(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+
+        return businessLocations;
+    }
+
+    public ArrayList<BusinessLocation> getBusinessLocations(String businessId) {
+        ArrayList<BusinessLocation> businessLocationArray = new ArrayList<>();
 
         open();
         Cursor cursor = database.query(DBUtils.LOCATION_TABLE_NAME, LOCATION_TABLE_COLUMNS,
@@ -63,13 +103,13 @@ public class LocationHelper {
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
-            locationArray.add(parseLocation(cursor));
+            businessLocationArray.add(parseLocation(cursor));
             cursor.moveToNext();
         }
         cursor.close();
         close();
 
-        return locationArray;
+        return businessLocationArray;
     }
 
     public String addLocation(String locationId, String name, String businessId, double latitude, double longitude, String address) {
@@ -91,19 +131,19 @@ public class LocationHelper {
         return locationId;
     }
 
-    public void updateLocation(Location location) {
+    public void updateLocation(BusinessLocation businessLocation) {
         ContentValues values = new ContentValues();
 
-        values.put(DBUtils.LOCATION_ID, location.getLocationId());
-        values.put(DBUtils.LOCATION_NAME, location.getName());
-        values.put(DBUtils.LOCATION_BUSINESS_ID, location.getBusinessId());
-        values.put(DBUtils.LOCATION_LATITUDE, Double.valueOf(location.getLatitude()));
-        values.put(DBUtils.LOCATION_LONGITUDE, Double.valueOf(location.getLongitude()));
-        values.put(DBUtils.LOCATION_ADDRESS, location.getAddress());
+        values.put(DBUtils.LOCATION_ID, businessLocation.getLocationId());
+        values.put(DBUtils.LOCATION_NAME, businessLocation.getName());
+        values.put(DBUtils.LOCATION_BUSINESS_ID, businessLocation.getBusinessId());
+        values.put(DBUtils.LOCATION_LATITUDE, Double.valueOf(businessLocation.getLatitude()));
+        values.put(DBUtils.LOCATION_LONGITUDE, Double.valueOf(businessLocation.getLongitude()));
+        values.put(DBUtils.LOCATION_ADDRESS, businessLocation.getAddress());
 
         open();
         database.update(DBUtils.LOCATION_TABLE_NAME, values, DBUtils.LOCATION_ID + " = '" +
-                        location.getLocationId() + "'", null);
+                        businessLocation.getLocationId() + "'", null);
         close();
     }
 
@@ -120,7 +160,7 @@ public class LocationHelper {
         close();
     }
 
-    private Location parseLocation(Cursor cursor) {
+    private BusinessLocation parseLocation(Cursor cursor) {
 
         String locationId = cursor.getString(cursor.getColumnIndex(DBUtils.LOCATION_ID));
         String name = cursor.getString(cursor.getColumnIndex(DBUtils.LOCATION_NAME));
@@ -129,6 +169,6 @@ public class LocationHelper {
         double longitude = cursor.getDouble(cursor.getColumnIndex(DBUtils.LOCATION_LONGITUDE));
         String address = cursor.getString(cursor.getColumnIndex(DBUtils.LOCATION_ADDRESS));
 
-        return new Location(locationId, name, businessId, latitude, longitude, address);
+        return new BusinessLocation(locationId, name, businessId, latitude, longitude, address);
     }
 }

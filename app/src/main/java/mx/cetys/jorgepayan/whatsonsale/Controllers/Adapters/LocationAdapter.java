@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import mx.cetys.jorgepayan.whatsonsale.Models.Location;
+import mx.cetys.jorgepayan.whatsonsale.Models.BusinessLocation;
 import mx.cetys.jorgepayan.whatsonsale.R;
 
 /**
  * Created by fidel on 12/2/2017.
  */
 
-public class LocationAdapter extends ArrayAdapter<Location> {
+public class LocationAdapter extends ArrayAdapter<BusinessLocation> {
     public LocationAdapter(Context context){
         super(context, R.layout.location_row, R.id.text_view_locationName);
     }
@@ -28,10 +28,10 @@ public class LocationAdapter extends ArrayAdapter<Location> {
         TextView locationName = (TextView) view.findViewById(R.id.text_view_locationName);
         TextView locationAddress = (TextView) view.findViewById(R.id.text_view_locationAddress);
 
-        Location location = this.getItem(position);
+        BusinessLocation businessLocation = this.getItem(position);
 
-        locationName.setText(location.getName());
-        locationAddress.setText(location.getAddress());
+        locationName.setText(businessLocation.getName());
+        locationAddress.setText(businessLocation.getAddress());
 
         return view;
     }
