@@ -3,6 +3,7 @@ package mx.cetys.jorgepayan.whatsonsale.Utils;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,6 +28,7 @@ import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.CustomerHomeActivi
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.MainActivity;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.RegisterBusinessActivity;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.RegisterCustomerActivity;
+import mx.cetys.jorgepayan.whatsonsale.Models.BusinessLocation;
 import mx.cetys.jorgepayan.whatsonsale.Models.User;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.BusinessHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.CategoryHelper;
@@ -44,8 +46,14 @@ import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.UserHelper;
 
 public class Utils {
     private static String api = "https://rybo0zqlw9.execute-api.us-east-1.amazonaws.com/api/";
-    private static UserHelper userHelper;
 
+    private static UserHelper userHelper;
+    private static LocationHelper locationHelper;
+    private static SaleHelper saleHelper;
+    private static CustomerCategoryHelper customerCategoryHelper;
+    private static SaleLocationHelper saleLocationHelper;
+
+    /* ------------------------------------------ API ------------------------------------------- */
     private static JsonArrayRequest getAll(final String entity, final Context context) {
         String url = api + entity;
         return new JsonArrayRequest(Request.Method.GET, url, null,
@@ -57,7 +65,6 @@ public class Utils {
                             case "user":
                                 System.out.println(response);
 
-                                userHelper = new UserHelper(context);
                                 userHelper.clearTable();
 
                                 for(int i = 0; i < response.length(); i++){
@@ -98,7 +105,7 @@ public class Utils {
                                 System.out.println("Businesses synchronized correctly.");
                                 break;
                             case "customer":
-                                System.out.println(response);
+                                System.out.println("customers" + response);
 
                                 CustomerHelper customerHelper = new CustomerHelper(context);
                                 customerHelper.clearTable();
@@ -174,7 +181,7 @@ public class Utils {
                                     JSONObject saleLocation = response.getJSONObject(i);
                                     saleLocationHelper.addSaleLocation(
                                         saleLocation.getString("sale_id"),
-                                        saleLocation.getString("business_id"));
+                                        saleLocation.getString("location_id"));
                                 }
 
                                 System.out.println("Sale Locations synchronized correctly.");
@@ -281,6 +288,15 @@ public class Utils {
 
     }
 
+    /* ------------------------------------------ MISC ------------------------------------------ */
+    public static void initHelpers(Context context) {
+        userHelper = new UserHelper(context);
+        locationHelper = new LocationHelper(context);
+        saleHelper = new SaleHelper(context);
+        customerCategoryHelper = new CustomerCategoryHelper(context);
+        saleLocationHelper = new SaleLocationHelper(context);
+    }
+
     public static String generateId(){
         return UUID.randomUUID().toString();
     }
@@ -368,5 +384,13 @@ public class Utils {
                 }
             }
         }
+    }
+
+    public static ArrayList<BusinessLocation> filterLocationsByCustomerCategory(String cutomserId) {
+        ArrayList<String> customerCategories =
+            customerCategoryHelper.getCustomerCategoryByCustomerId(cutomserId);
+        ArrayList<String> salesIds = saleHelper.getSalesIdsByCategoryNames(customerCategories);
+        ArrayList<String> locationIds = saleLocationHelper.getLocationIdsBySalesIds(salesIds);
+        return locationHelper.getLocationsByIds(locationIds);
     }
 }

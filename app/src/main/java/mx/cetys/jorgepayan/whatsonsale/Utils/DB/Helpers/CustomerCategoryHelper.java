@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 import mx.cetys.jorgepayan.whatsonsale.Models.CustomerCategory;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
 
@@ -35,18 +37,24 @@ public class CustomerCategoryHelper {
         dbHelper.close();
     }
 
-    public CustomerCategory getCustomerCategory(String customerCategoryCustomerId) {
+    public ArrayList<String> getCustomerCategoryByCustomerId(String customerId) {
+        ArrayList<String> customerCategories = new ArrayList<>();
         open();
-        Cursor cursor = database.query(DBUtils.CUSTOMER_CATEGORY_TABLE_NAME, CUSTOMER_CATEGORY_TABLE_COLUMNS,
-                DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID + " = " + customerCategoryCustomerId, null, null, null, null);
+        Cursor cursor = database.query(DBUtils.CUSTOMER_CATEGORY_TABLE_NAME,
+            CUSTOMER_CATEGORY_TABLE_COLUMNS, DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID + " = '" +
+                customerId + "'", null, null, null, null);
 
         cursor.moveToFirst();
-        CustomerCategory customerCategory = parseCustomerCategory(cursor);
+        while(!cursor.isAfterLast()){
+            customerCategories.add(parseCustomerCategory(cursor).getCategoryName());
+            cursor.moveToNext();
+        }
         cursor.close();
         close();
 
-        return customerCategory;
+        return customerCategories;
     }
+
 
     public long addCustomerCategory(String customerId, String categoryId) {
         open();
@@ -65,7 +73,7 @@ public class CustomerCategoryHelper {
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID, customerCategory.getCustomerId());
-        values.put(DBUtils.CUSTOMER_CATEGORY_CATEGORY_NAME, customerCategory.getCategoryId());
+        values.put(DBUtils.CUSTOMER_CATEGORY_CATEGORY_NAME, customerCategory.getCategoryName());
 
         int response = database.update(DBUtils.CUSTOMER_CATEGORY_TABLE_NAME, values, DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID + " = " + customerCategory.getCustomerId(),
                 null);
@@ -87,8 +95,8 @@ public class CustomerCategoryHelper {
 
     private CustomerCategory parseCustomerCategory(Cursor cursor) {
         String customerCategoryCustomerId = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_CATEGORY_CUSTOMER_ID));
-        String customerCategoryCategoryId = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_CATEGORY_CATEGORY_NAME));
+        String customerCategoryCategoryName = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_CATEGORY_CATEGORY_NAME));
 
-        return new CustomerCategory(customerCategoryCustomerId, customerCategoryCustomerId);
+        return new CustomerCategory(customerCategoryCustomerId, customerCategoryCategoryName);
     }
 }
