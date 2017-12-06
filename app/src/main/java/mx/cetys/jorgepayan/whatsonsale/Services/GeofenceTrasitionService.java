@@ -17,11 +17,17 @@ import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.CustomerHomeActivity;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.MainActivity;
+import mx.cetys.jorgepayan.whatsonsale.Models.BusinessLocation;
+import mx.cetys.jorgepayan.whatsonsale.Models.Sale;
 import mx.cetys.jorgepayan.whatsonsale.R;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.LocationHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleViewHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
 
 
 public class GeofenceTrasitionService extends IntentService {
@@ -44,30 +50,42 @@ public class GeofenceTrasitionService extends IntentService {
         }
 
         int geoFenceTransition = geofencingEvent.getGeofenceTransition();
-        if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
-                geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT ) {
+        if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
+            ArrayList<Sale> validSales =
+                Utils.getLocationValidSales(triggeringGeofences.get(0).getRequestId(),
+                    CustomerHomeActivity.customerCategories);
+            if (!validSales.isEmpty()) {
+                SaleViewHelper saleViewHelper = new SaleViewHelper(CustomerHomeActivity.context);
+                for(final Sale sale : validSales) {
+                    saleViewHelper.addSaleView(sale.getSaleId(),
+                        CustomerHomeActivity.currentCustomer.getCustomerId());
 
-            String geofenceTransitionDetails = getGeofenceTrasitionDetails(geoFenceTransition,
-                triggeringGeofences);
+                    CustomerHomeActivity.salesViewed.add(sale.getSaleId());
 
-            sendNotification( geofenceTransitionDetails );
+                    Utils.post("sale_view", CustomerHomeActivity.context, new HashMap<String, String>(){{
+                        put("sale_id", sale.getSaleId());
+                        put("customer_id", CustomerHomeActivity.currentCustomer.getCustomerId());
+                    }});
+                }
+                String notificationMessage = getNotificationMessage(triggeringGeofences);
+                sendNotification(notificationMessage);
+            }
         }
     }
 
 
-    private String getGeofenceTrasitionDetails(int geoFenceTransition, List<Geofence> triggeringGeofences) {
+    private String getNotificationMessage(List<Geofence> triggeringGeofences) {
         ArrayList<String> triggeringGeofencesList = new ArrayList<>();
         for ( Geofence geofence : triggeringGeofences ) {
             triggeringGeofencesList.add( geofence.getRequestId() );
         }
 
-        String status = null;
-        if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER )
-            status = "Entering ";
-        else if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT )
-            status = "Exiting ";
-        return status + TextUtils.join( ", ", triggeringGeofencesList);
+        String message = "New sales nearby! Just go to the closest ";
+        BusinessLocation location = Utils.locationHelper.getLocation(
+            triggeringGeofences.get(0).getRequestId());
+        message += location.getName() + "!";
+        return message;
     }
 
     private void sendNotification( String msg ) {
@@ -97,7 +115,7 @@ public class GeofenceTrasitionService extends IntentService {
                 .setSmallIcon(R.drawable.ic_place_accent_24dp)
                 .setColor(Color.RED)
                 .setContentTitle(msg)
-                .setContentText("Geofence Notification!")
+                .setContentText("Check it out!")
                 .setContentIntent(notificationPendingIntent)
                 .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                 .setAutoCancel(true);
