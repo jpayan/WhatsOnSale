@@ -19,7 +19,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -29,6 +33,7 @@ import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.MainActivity;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.RegisterBusinessActivity;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.RegisterCustomerActivity;
 import mx.cetys.jorgepayan.whatsonsale.Models.BusinessLocation;
+import mx.cetys.jorgepayan.whatsonsale.Models.Sale;
 import mx.cetys.jorgepayan.whatsonsale.Models.User;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.BusinessHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.CategoryHelper;
@@ -38,6 +43,7 @@ import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.LocationHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleLocationHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleReviewHelper;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.SaleViewHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.UserHelper;
 
 /**
@@ -48,7 +54,7 @@ public class Utils {
     private static String api = "https://rybo0zqlw9.execute-api.us-east-1.amazonaws.com/api/";
 
     private static UserHelper userHelper;
-    private static LocationHelper locationHelper;
+    public static LocationHelper locationHelper;
     private static SaleHelper saleHelper;
     private static CustomerCategoryHelper customerCategoryHelper;
     private static SaleLocationHelper saleLocationHelper;
@@ -198,11 +204,28 @@ public class Utils {
                                     saleReviewHelper.addSaleReview(
                                         saleReview.getString("sale_id"),
                                         saleReview.getString("customer_id"),
+                                        saleReview.getString("description"),
                                         saleReview.getString("date"),
                                         saleReview.getString("liked"));
                                 }
 
-                                System.out.println("Sale Locations synchronized correctly.");
+                                System.out.println("Sale Reviews synchronized correctly.");
+                                break;
+                            case "sale_view":
+                                System.out.println(response);
+
+                                SaleViewHelper saleViewHelper =
+                                        new SaleViewHelper(context);
+                                saleViewHelper.clearTable();
+
+                                for(int i = 0; i < response.length(); i++){
+                                    JSONObject saleReview = response.getJSONObject(i);
+                                    saleViewHelper.addSaleView(
+                                            saleReview.getString("sale_id"),
+                                            saleReview.getString("customer_id"));
+                                }
+
+                                System.out.println("Sale Views synchronized correctly.");
                                 break;
                         }
                     }
@@ -231,6 +254,7 @@ public class Utils {
         queue.add(getAll("sale", context));
         queue.add(getAll("sale_location", context));
         queue.add(getAll("sale_review", context));
+        queue.add(getAll("sale_view", context));
     }
 
     public static void post(final String entity, final Context context,
@@ -386,11 +410,55 @@ public class Utils {
         }
     }
 
-    public static ArrayList<BusinessLocation> filterLocationsByCustomerCategory(String cutomserId) {
+    public static ArrayList<BusinessLocation> filterLocationsByCustomerCategory(String customerId) {
+        Log.d("Utils: Customer Id", customerId);
         ArrayList<String> customerCategories =
-            customerCategoryHelper.getCustomerCategoryByCustomerId(cutomserId);
+            customerCategoryHelper.getCustomerCategoryByCustomerId(customerId);
+        Log.d("Utils: Categories", customerCategories.toString());
         ArrayList<String> salesIds = saleHelper.getSalesIdsByCategoryNames(customerCategories);
         ArrayList<String> locationIds = saleLocationHelper.getLocationIdsBySalesIds(salesIds);
+        Log.d("Utils: Location Ids", locationIds.toString());
         return locationHelper.getLocationsByIds(locationIds);
+    }
+
+    public static ArrayList<Sale> getLocationValidSales(String locationId, ArrayList<String> categories) {
+        ArrayList<String> salesIds = saleLocationHelper.getSalesIdsByLocationId(locationId);
+        ArrayList<Sale> validSales = new ArrayList<>();
+
+        Date date = new Date();
+        String DATE_FORMAT = "MM/dd/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        try {
+            for(Sale sale : saleHelper.getSalesByIds(salesIds)) {
+                if (date.before(sdf.parse(sale.getExpirationDate()))
+                    && categories.contains(sale.getCategoryName())
+                    && !CustomerHomeActivity.salesViewed.contains(sale.getSaleId())) {
+                    validSales.add(sale);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return validSales;
+    }
+
+    public static ArrayList<Sale> getValidSales(ArrayList<String> categories) {
+        ArrayList<Sale> validSales = new ArrayList<>();
+
+        Date date = new Date();
+        String DATE_FORMAT = "MM/dd/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        try {
+            for(Sale sale : saleHelper.getAllSales()) {
+                if (date.before(sdf.parse(sale.getExpirationDate()))
+                    && categories.contains(sale.getCategoryName())
+                    && !CustomerHomeActivity.salesViewed.contains(sale.getSaleId())) {
+                    validSales.add(sale);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return validSales;
     }
 }
