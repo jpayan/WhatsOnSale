@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import mx.cetys.jorgepayan.whatsonsale.Models.SaleLocation;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.DBUtils;
@@ -47,6 +50,44 @@ public class SaleLocationHelper {
         close();
 
         return saleLocation;
+    }
+
+    public ArrayList<String> getSalesIdsByLocationId(String locationId) {
+        ArrayList<String> salesIds = new ArrayList<>();
+        open();
+        Cursor cursor = database.query(DBUtils.SALE_LOCATION_TABLE_NAME, SALE_LOCATION_TABLE_COLUMNS,
+            DBUtils.SALE_LOCATION_LOCATION_ID + " = '" + locationId + "'", null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            salesIds.add(parseSaleLocation(cursor).getSaleId());
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return salesIds;
+    }
+
+    public ArrayList<String> getLocationIdsBySalesIds(ArrayList<String> salesIds) {
+        ArrayList<String> locationIds = new ArrayList<>();
+        if(!salesIds.isEmpty()) {
+            String saleIdsGroup = "(";
+            for (String saleId : salesIds) {
+                saleIdsGroup += String.format("'%s',", saleId);
+            }
+            saleIdsGroup = saleIdsGroup.replaceFirst(".$","") + ")";
+            open();
+            Cursor cursor = database.query(DBUtils.SALE_LOCATION_TABLE_NAME, SALE_LOCATION_TABLE_COLUMNS,
+                    DBUtils.SALE_LOCATION_SALE_ID + " IN " + saleIdsGroup, null, null, null, null);
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                locationIds.add(parseSaleLocation(cursor).getLocationId());
+                cursor.moveToNext();
+            }
+            cursor.close();
+            close();
+        }
+        return locationIds;
     }
 
     public long addSaleLocation(String saleId, String locationId) {
@@ -92,6 +133,6 @@ public class SaleLocationHelper {
         String saleLocationSaleId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_LOCATION_SALE_ID));
         String saleLocationLocationId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_LOCATION_LOCATION_ID));
 
-        return new SaleLocation(saleLocationSaleId, saleLocationSaleId);
+        return new SaleLocation(saleLocationSaleId, saleLocationLocationId);
     }
 }

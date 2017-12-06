@@ -6,11 +6,11 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
 
 public class CustomerCategory {
     private String customerId;
-    private String categoryId;
+    private String categoryName;
 
-    public CustomerCategory(String customerId, String categoryId) {
+    public CustomerCategory(String customerId, String categoryName) {
         this.customerId = customerId;
-        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
     public String getCustomerId() {
@@ -21,11 +21,11 @@ public class CustomerCategory {
         this.customerId = customerId;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

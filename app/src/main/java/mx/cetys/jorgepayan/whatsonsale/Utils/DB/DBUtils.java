@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBUtils extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "WhatsOnSale.db";
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 13;
 
     /******************************************** USER ********************************************/
 
@@ -135,8 +135,9 @@ public class DBUtils extends SQLiteOpenHelper {
     /*************************************** SALE REVIEW ******************************************/
 
     public static final String SALE_REVIEW_TABLE_NAME = "sale_review";
-    public static final String SALE_REVIEW_SALE_ID= "customer_id";
-    public static final String SALE_REVIEW_CUSTOMER_ID = "location_id";
+    public static final String SALE_REVIEW_SALE_ID= "sale_id";
+    public static final String SALE_REVIEW_CUSTOMER_ID = "customer_id";
+    public static final String SALE_REVIEW_DESCRIPTION = "description";
     public static final String SALE_REVIEW_DATE = "date";
     public static final String SALE_REVIEW_LIKED = "liked";
 
@@ -144,8 +145,21 @@ public class DBUtils extends SQLiteOpenHelper {
             "CREATE TABLE " + SALE_REVIEW_TABLE_NAME + "(" +
                     SALE_REVIEW_SALE_ID + " TEXT NOT NULL, " +
                     SALE_REVIEW_CUSTOMER_ID + " TEXT NOT NULL, " +
+                    SALE_REVIEW_DESCRIPTION + " TEXT NOT NULL, " +
                     SALE_REVIEW_DATE + " TEXT NOT NULL, " +
                     SALE_REVIEW_LIKED + " TEXT NOT NULL " +
+                    ");";
+
+    /**************************************** SALE VIEW *******************************************/
+
+    public static final String SALE_VIEW_TABLE_NAME = "sale_view";
+    public static final String SALE_VIEW_SALE_ID= "sale_id";
+    public static final String SALE_VIEW_CUSTOMER_ID = "customer_id";
+
+    public static final String CREATE_SALE_VIEW_TABLE =
+            "CREATE TABLE " + SALE_VIEW_TABLE_NAME + "(" +
+                    SALE_VIEW_SALE_ID + " TEXT NOT NULL, " +
+                    SALE_VIEW_CUSTOMER_ID + " TEXT NOT NULL " +
                     ");";
 
     public DBUtils(Context context) {
@@ -163,6 +177,7 @@ public class DBUtils extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_SALE_LOCATION_TABLE);
         sqLiteDatabase.execSQL(CREATE_CUSTOMER_CATEGORY_TABLE);
         sqLiteDatabase.execSQL(CREATE_SALE_REVIEW_TABLE);
+        sqLiteDatabase.execSQL(CREATE_SALE_VIEW_TABLE);
     }
 
     @Override
@@ -176,6 +191,7 @@ public class DBUtils extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SALE_LOCATION_TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CUSTOMER_CATEGORY_TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SALE_REVIEW_TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + SALE_VIEW_TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 }

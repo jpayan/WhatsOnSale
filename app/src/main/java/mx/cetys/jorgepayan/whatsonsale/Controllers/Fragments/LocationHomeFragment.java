@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.BusinessHomeActivity;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Activities.LocationDetailsActivity;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Adapters.LocationAdapter;
-import mx.cetys.jorgepayan.whatsonsale.Models.Location;
+import mx.cetys.jorgepayan.whatsonsale.Models.BusinessLocation;
 import mx.cetys.jorgepayan.whatsonsale.R;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.LocationHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.SimpleDialog;
@@ -73,12 +73,12 @@ public class LocationHomeFragment extends Fragment {
         listViewLocation.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Location location = (Location) listViewLocation.getItemAtPosition(position);
+                BusinessLocation businessLocation = (BusinessLocation) listViewLocation.getItemAtPosition(position);
 
                 Intent intent = new Intent(getContext().getApplicationContext(),
                     LocationDetailsActivity.class);
                 intent.putExtra(CALLING_ACTIVITY, 1);
-                intent.putExtra(LOCATION, location);
+                intent.putExtra(LOCATION, businessLocation);
                 startActivityForResult(intent, LOCATION_DETAILS_REQUEST);
             }
         });
@@ -87,11 +87,11 @@ public class LocationHomeFragment extends Fragment {
     }
 
     private void fillLocationListView(String businessId, LocationAdapter locationAdapter){
-        ArrayList<Location> businessLocations = locationHelper.getBusinessLocations(businessId);
+        ArrayList<BusinessLocation> businessBusinessLocations = locationHelper.getBusinessLocations(businessId);
         locationAdapter.clear();
-        if(!businessLocations.isEmpty()){
-            for(Location location : businessLocations){
-                locationAdapter.add(location);
+        if(!businessBusinessLocations.isEmpty()){
+            for(BusinessLocation businessLocation : businessBusinessLocations){
+                locationAdapter.add(businessLocation);
             }
         }
     }
@@ -102,7 +102,8 @@ public class LocationHomeFragment extends Fragment {
                 fillLocationListView(BusinessHomeActivity.currentBusiness.getBusinessId(),
                     locationAdapter);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                SimpleDialog successDialog = new SimpleDialog("Location successfully " + data.getStringExtra(SUCCESS), "Ok");
+                SimpleDialog successDialog = new SimpleDialog("BusinessLocation successfully " +
+                    data.getStringExtra(SUCCESS), "Ok");
                 successDialog.show(fm, "Alert Dialog Fragment");
             }
         }

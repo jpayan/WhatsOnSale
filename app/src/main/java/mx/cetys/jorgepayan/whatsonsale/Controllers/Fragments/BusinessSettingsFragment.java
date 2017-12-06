@@ -59,7 +59,7 @@ public class BusinessSettingsFragment extends Fragment {
 
         business = BusinessHomeActivity.currentBusiness;
 
-        businessEmail = (EditText) view.findViewById(R.id.edit_text_updateBusinessemail);
+        businessEmail = (EditText) view.findViewById(R.id.edit_text_updateBusinessSettings);
         businessEmail.setText(business.getUserEmail());
 
         businessName = (EditText) view.findViewById(R.id.edit_text_updateBusinessName);

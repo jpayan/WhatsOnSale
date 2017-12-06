@@ -57,10 +57,22 @@ public class CustomerHelper {
                 DBUtils.CUSTOMER_USER_EMAIL + " = '" + customerEmail+  "'", null, null, null, null);
 
         cursor.moveToFirst();
-        Customer customer = parsecustomer(cursor);
+        Customer customer = parseCustomer(cursor);
         cursor.close();
         close();
 
+        return customer;
+    }
+
+    public Customer getCustomerByEmail(String userEmail) {
+        open();
+        Cursor cursor = database.query(DBUtils.CUSTOMER_TABLE_NAME, CUSTOMER_TABLE_COLUMNS,
+                DBUtils.CUSTOMER_USER_EMAIL + " = '" + userEmail + "'", null, null, null, null);
+
+        cursor.moveToFirst();
+        Customer customer = parseCustomer(cursor);
+        cursor.close();
+        close();
         return customer;
     }
 
@@ -110,7 +122,7 @@ public class CustomerHelper {
         close();
     }
 
-    private Customer parsecustomer(Cursor cursor) {
+    private Customer parseCustomer(Cursor cursor) {
         String customerId = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_ID));
         String userEmail = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_USER_EMAIL));
         String name = cursor.getString(cursor.getColumnIndex(DBUtils.CUSTOMER_NAME));

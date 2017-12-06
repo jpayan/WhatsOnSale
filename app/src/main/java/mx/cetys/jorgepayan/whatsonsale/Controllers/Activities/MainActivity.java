@@ -29,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
         final EditText editTextEmail = (EditText) findViewById(R.id.edit_text_email);
         final EditText editTextPassword = (EditText) findViewById(R.id.edit_text_password);
         final RadioButton radioButtonBusiness =
-                (RadioButton) findViewById(R.id.radio_button_business);
+            (RadioButton) findViewById(R.id.radio_button_business);
 
         final FragmentManager fm = getSupportFragmentManager();
 
         Utils.synchronizeDB(this);
+
+        Utils.initHelpers(getApplicationContext());
 
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override

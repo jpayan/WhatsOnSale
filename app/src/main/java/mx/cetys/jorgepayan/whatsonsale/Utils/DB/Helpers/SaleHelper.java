@@ -52,20 +52,65 @@ public class SaleHelper {
     }
 
     public ArrayList<Sale> getAllSales() {
-        ArrayList<Sale> saleArray = new ArrayList<>();
+        ArrayList<Sale> sales = new ArrayList<>();
         open();
-        Cursor cursor = database.query(DBUtils.SALE_TABLE_NAME, SALE_TABLE_COLUMNS,
-                null, null, null, null, null);
+        Cursor cursor = database.query(DBUtils.SALE_TABLE_NAME, SALE_TABLE_COLUMNS, null,
+                null, null, null, null);
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
-            saleArray.add(parseSale(cursor));
+            sales.add(parseSale(cursor));
             cursor.moveToNext();
         }
         cursor.close();
         close();
 
-        return saleArray;
+        return sales;
+    }
+
+    public ArrayList<Sale> getSalesByIds(ArrayList<String> salesIds) {
+        ArrayList<Sale> sales = new ArrayList<>();
+        if (!salesIds.isEmpty()) {
+            String salesIdsGroup = "(";
+            for (String saleId : salesIds) {
+                salesIdsGroup += String.format("'%s',", saleId);
+            }
+            salesIdsGroup = salesIdsGroup.replaceFirst(".$","") + ")";
+            open();
+            Cursor cursor = database.query(DBUtils.SALE_TABLE_NAME, SALE_TABLE_COLUMNS,
+                    DBUtils.SALE_ID + " IN " + salesIdsGroup, null, null, null, null);
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                sales.add(parseSale(cursor));
+                cursor.moveToNext();
+            }
+            cursor.close();
+            close();
+        }
+        return sales;
+    }
+
+    public ArrayList<String> getSalesIdsByCategoryNames(ArrayList<String> categoryNames) {
+        ArrayList<String> salesIds = new ArrayList<>();
+        if (!categoryNames.isEmpty()) {
+            String categories = "(";
+            for (String category : categoryNames) {
+                categories += String.format("'%s',", category);
+            }
+            categories = categories.replaceFirst(".$","") + ")";
+            open();
+            Cursor cursor = database.query(DBUtils.SALE_TABLE_NAME, SALE_TABLE_COLUMNS,
+                    DBUtils.SALE_CATEGORY_NAME + " IN " + categories, null, null, null, null);
+
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                salesIds.add(parseSale(cursor).getSaleId());
+                cursor.moveToNext();
+            }
+            cursor.close();
+            close();
+        }
+        return salesIds;
     }
 
     public ArrayList<Sale> getBusinessSales(String businessId) {
@@ -131,14 +176,12 @@ public class SaleHelper {
     }
 
     private Sale parseSale(Cursor cursor) {
-
         String saleId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_ID));
         String saleBusinessId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_BUSINESS_ID ));
         String categoryName = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_CATEGORY_NAME));
         String description = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_DESCRIPTION));
         String expirationdate =
                 cursor.getString(cursor.getColumnIndex(DBUtils.SALE_EXPIRATION_DATE));
-
 
         return new Sale(saleId, saleBusinessId, categoryName, description, expirationdate);
     }
