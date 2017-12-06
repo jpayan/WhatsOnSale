@@ -44,7 +44,9 @@
             android:value="@string/api_key" />
 
         <activity android:name=".Controllers.Activities.LocationDetailsActivity" />
-        <activity android:name=".Controllers.Activities.SaleDetailsActivity"></activity>
+        <activity android:name=".Controllers.Activities.SaleDetailsActivity" />
+        <activity android:name=".Controllers.Activities.MapActivity" />
+        <activity android:name=".Controllers.Activities.ReviewDetailsActivity"></activity>
     </application>
 
 </manifest>
