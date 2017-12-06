@@ -20,6 +20,7 @@ public class SaleReviewHelper {
     private String[] SALE_REVIEW_TABLE_COLUMNS = {
             DBUtils.SALE_REVIEW_SALE_ID,
             DBUtils.SALE_REVIEW_CUSTOMER_ID,
+            DBUtils.SALE_REVIEW_DESCRIPTION,
             DBUtils.SALE_REVIEW_DATE,
             DBUtils.SALE_REVIEW_LIKED
     };
@@ -49,12 +50,14 @@ public class SaleReviewHelper {
         return saleReview;
     }
 
-    public long addSaleReview(String saleId, String customerId, String date, String liked) {
+    public long addSaleReview(String saleId, String customerId, String description,
+                              String date, String liked) {
         open();
         ContentValues values = new ContentValues();
 
         values.put(DBUtils.SALE_REVIEW_SALE_ID, saleId);
         values.put(DBUtils.SALE_REVIEW_CUSTOMER_ID, customerId);
+        values.put(DBUtils.SALE_REVIEW_DESCRIPTION, description);
         values.put(DBUtils.SALE_REVIEW_DATE, date);
         values.put(DBUtils.SALE_REVIEW_LIKED, liked);
 
@@ -69,6 +72,7 @@ public class SaleReviewHelper {
 
         values.put(DBUtils.SALE_REVIEW_SALE_ID, saleReview.getSaleId());
         values.put(DBUtils.SALE_REVIEW_CUSTOMER_ID, saleReview.getCustomerId());
+        values.put(DBUtils.SALE_REVIEW_DESCRIPTION, saleReview.getDescription());
         values.put(DBUtils.SALE_REVIEW_DATE, saleReview.getDate());
         values.put(DBUtils.SALE_REVIEW_LIKED, saleReview.getLiked());
 
@@ -94,9 +98,11 @@ public class SaleReviewHelper {
     private SaleReview parseSaleReview(Cursor cursor) {
         String saleReviewSaleId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_SALE_ID));
         String saleReviewCustomerId = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_CUSTOMER_ID));
+        String saleReviewDescription = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_DESCRIPTION));
         String saleReviewDate = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_DATE));
         String saleReviewLiked = cursor.getString(cursor.getColumnIndex(DBUtils.SALE_REVIEW_LIKED));
 
-        return new SaleReview(saleReviewSaleId, saleReviewCustomerId,saleReviewDate,saleReviewLiked);
+        return new SaleReview(saleReviewSaleId, saleReviewCustomerId, saleReviewDescription,
+            saleReviewDate, saleReviewLiked);
     }
 }

@@ -51,6 +51,45 @@ public class SaleHelper {
         return sale;
     }
 
+    public ArrayList<Sale> getAllSales() {
+        ArrayList<Sale> sales = new ArrayList<>();
+        open();
+        Cursor cursor = database.query(DBUtils.SALE_TABLE_NAME, SALE_TABLE_COLUMNS, null,
+                null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            sales.add(parseSale(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+
+        return sales;
+    }
+
+    public ArrayList<Sale> getSalesByIds(ArrayList<String> salesIds) {
+        ArrayList<Sale> sales = new ArrayList<>();
+        if (!salesIds.isEmpty()) {
+            String salesIdsGroup = "(";
+            for (String saleId : salesIds) {
+                salesIdsGroup += String.format("'%s',", saleId);
+            }
+            salesIdsGroup = salesIdsGroup.replaceFirst(".$","") + ")";
+            open();
+            Cursor cursor = database.query(DBUtils.SALE_TABLE_NAME, SALE_TABLE_COLUMNS,
+                    DBUtils.SALE_ID + " IN " + salesIdsGroup, null, null, null, null);
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                sales.add(parseSale(cursor));
+                cursor.moveToNext();
+            }
+            cursor.close();
+            close();
+        }
+        return sales;
+    }
+
     public ArrayList<String> getSalesIdsByCategoryNames(ArrayList<String> categoryNames) {
         ArrayList<String> salesIds = new ArrayList<>();
         if (!categoryNames.isEmpty()) {

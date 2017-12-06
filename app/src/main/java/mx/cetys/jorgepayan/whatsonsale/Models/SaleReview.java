@@ -7,12 +7,14 @@ package mx.cetys.jorgepayan.whatsonsale.Models;
 public class SaleReview {
     private String saleId;
     private String customerId;
+    private String description;
     private String date;
     private String liked;
 
-    public SaleReview(String saleId, String customerId, String date, String liked) {
+    public SaleReview(String saleId, String customerId, String description, String date, String liked) {
         this.saleId = saleId;
         this.customerId = customerId;
+        this.description = description;
         this.date = date;
         this.liked = liked;
     }
@@ -31,6 +33,14 @@ public class SaleReview {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDate() {

@@ -45,7 +45,7 @@ public class LocationHelper {
     public BusinessLocation getLocation(String locationId) {
         open();
         Cursor cursor = database.query(DBUtils.LOCATION_TABLE_NAME, LOCATION_TABLE_COLUMNS,
-                DBUtils.LOCATION_ID + " = " + locationId, null, null, null, null);
+                DBUtils.LOCATION_ID + " = '" + locationId + "'", null, null, null, null);
 
         cursor.moveToFirst();
         BusinessLocation businessLocation = parseLocation(cursor);

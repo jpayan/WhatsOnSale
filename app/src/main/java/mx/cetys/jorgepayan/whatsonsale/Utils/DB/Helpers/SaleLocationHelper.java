@@ -52,6 +52,22 @@ public class SaleLocationHelper {
         return saleLocation;
     }
 
+    public ArrayList<String> getSalesIdsByLocationId(String locationId) {
+        ArrayList<String> salesIds = new ArrayList<>();
+        open();
+        Cursor cursor = database.query(DBUtils.SALE_LOCATION_TABLE_NAME, SALE_LOCATION_TABLE_COLUMNS,
+            DBUtils.SALE_LOCATION_LOCATION_ID + " = '" + locationId + "'", null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            salesIds.add(parseSaleLocation(cursor).getSaleId());
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+        return salesIds;
+    }
+
     public ArrayList<String> getLocationIdsBySalesIds(ArrayList<String> salesIds) {
         ArrayList<String> locationIds = new ArrayList<>();
         if(!salesIds.isEmpty()) {
