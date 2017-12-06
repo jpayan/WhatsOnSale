@@ -1,13 +1,89 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.CustomerSettingsFragment">
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:orientation="vertical"
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.BusinessSettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/txtView_customer_settings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:text="Settings"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/edit_text_updateCustomerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:cursorVisible="false"
+        android:editable="false"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/common_action_bar_splitter" />
+
+    <EditText
+        android:id="@+id/edit_text_updateCustomerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="Customer Name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edit_text_updateCustomerAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="text|number" />
+
+    <EditText
+        android:id="@+id/edit_text_updateCustomerGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="Gender"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btn_updateCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Update" />
+
+    <Button
+        android:id="@+id/btn_updateCustomerPasword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@android:color/holo_blue_dark"
+        android:text="Change password"
+        android:textColor="@android:color/white" />
+
+    <ImageButton
+        android:id="@+id/btn_customerLogout"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="69dp"
+        android:layout_height="67dp"
+        android:layout_gravity="right"
+        android:background="@color/common_signin_btn_dark_text_default"
+        android:backgroundTint="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_logout"
+        android:visibility="visible" />
+
+
+</LinearLayout>

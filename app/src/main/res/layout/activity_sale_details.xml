@@ -24,13 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/txtView_sale"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="15dp"
         android:text="Sale Description"
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
     <EditText
-        android:id="@+id/edit_text_saleDescription"
+        android:id="@+id/edit_text_saleReviewDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -46,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView_saleDescription"
-        android:layout_below="@+id/edit_text_saleDescription"
+        android:layout_below="@+id/edit_text_saleReviewDescription"
         android:layout_marginTop="21dp"
         android:text="Expiration Date"
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
@@ -64,13 +63,13 @@
         android:inputType="date" />
 
     <Button
-        android:id="@+id/btn_addSale"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_saveSale"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_text_expirationDate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"
-        android:text="Add Sale" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_deleteSale"
+        android:layout_marginTop="11dp"
+        android:text="Save" />
 
     <TextView
         android:id="@+id/txtView_saleCategoryName"
@@ -83,11 +82,40 @@
         android:layout_toEndOf="@+id/txtView_sale" />
 
     <Spinner
-        android:id="@+id/spinner_category"
+        android:id="@+id/spinner_sales"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_addSale"
+        android:layout_alignBottom="@+id/edit_text_expirationDate"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/edit_text_expirationDate" />
+
+    <mx.cetys.jorgepayan.whatsonsale.Utils.MultiSelectionSpinner
+        android:id="@+id/mySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="11dp" />
+
+    <Button
+        android:id="@+id/btn_deleteSale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mySpinner"
+        android:layout_marginTop="18dp"
+        android:background="@android:color/holo_red_dark"
+        android:text="Delete"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/edit_text_expirationDate"
+        android:layout_below="@+id/edit_text_expirationDate"
+        android:layout_marginTop="14dp"
+        android:text="Select location"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
 </RelativeLayout>

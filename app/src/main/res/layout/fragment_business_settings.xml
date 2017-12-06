@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,7 +23,7 @@
         android:id="@+id/edit_text_updateBusinessemail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:cursorVisible="false"
         android:editable="false"
         android:ems="10"
@@ -34,7 +35,7 @@
         android:id="@+id/edit_text_updateBusinessName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="Business Name"
         android:inputType="text" />
@@ -43,7 +44,7 @@
         android:id="@+id/edit_text_updateHqAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:ems="10"
         android:hint="HQ Address"
         android:inputType="text" />
@@ -63,6 +64,17 @@
         android:background="@android:color/holo_blue_dark"
         android:text="Change password"
         android:textColor="@android:color/white" />
+
+    <ImageButton
+        android:id="@+id/btn_logout"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="69dp"
+        android:layout_height="62dp"
+        android:layout_gravity="right"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:src="@drawable/ic_logout" />
 
 
 </LinearLayout>

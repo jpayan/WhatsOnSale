@@ -8,40 +8,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
-        android:weightSum="12">
+        android:weightSum="1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" >
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="Category"
-            android:textAlignment="textStart"
-            android:textColor="@android:color/black"
-            android:textSize="14dp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="Sales"
             android:gravity="center_horizontal"
-            android:text="Description"
             android:textColor="@android:color/black"
-            android:textSize="14dp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="Exp. Date"
-            android:textAlignment="textEnd"
-            android:textColor="@android:color/black"
-            android:textSize="14dp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+        <!--<TextView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="7"-->
+        <!--android:text="Location Address"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14dp"-->
+        <!--android:gravity="center_horizontal" />-->
     </LinearLayout>
 
     <FrameLayout
@@ -51,22 +39,86 @@
         <ListView
             android:id="@+id/list_view_sale"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn_addSale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:clickable="true"
-            android:visibility="visible"
-            app:backgroundTint="@color/common_signin_btn_dark_text_default"
-            app:elevation="5dp"
-            app:fabSize="normal"
-            app:rippleColor="@color/common_signin_btn_dark_text_default"
-            app:srcCompat="@android:drawable/ic_input_add" />
+        android:id="@+id/btn_saveSale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:visibility="visible"
+        app:backgroundTint="@color/common_signin_btn_dark_text_default"
+        app:elevation="5dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/common_signin_btn_dark_text_default"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     </FrameLayout>
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_marginBottom="15dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="12">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="4"-->
+            <!--android:text="Category"-->
+            <!--android:textAlignment="textStart"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:textSize="14dp" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="4"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:text="Description"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:textSize="14dp" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="4"-->
+            <!--android:text="Exp. Date"-->
+            <!--android:textAlignment="textEnd"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:textSize="14dp" />-->
+    <!--</LinearLayout>-->
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<ListView-->
+            <!--android:id="@+id/list_view_sale"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/btn_addSale"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|end"-->
+            <!--android:layout_margin="@dimen/fab_margin"-->
+            <!--android:clickable="true"-->
+            <!--android:visibility="visible"-->
+            <!--app:backgroundTint="@color/common_signin_btn_dark_text_default"-->
+            <!--app:elevation="5dp"-->
+            <!--app:fabSize="normal"-->
+            <!--app:rippleColor="@color/common_signin_btn_dark_text_default"-->
+            <!--app:srcCompat="@android:drawable/ic_input_add" />-->
+
+    <!--</FrameLayout>-->
 
 </LinearLayout>

@@ -1,29 +1,41 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.CustomerReviewHomeFragment">
+    tools:context="mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.SaleHomeFragment">
 
-    <ListView
-        android:id="@+id/list_view_saleReview"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="60dp"
+        android:text="Sales Review"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/black"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_addSaleReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:visibility="visible"
-        app:backgroundTint="@color/common_signin_btn_dark_text_default"
-        app:elevation="5dp"
-        app:fabSize="normal"
-        app:rippleColor="@color/common_signin_btn_dark_text_default"
-        app:srcCompat="@android:drawable/ic_input_add" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/list_view_saleReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_addSaleReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:clickable="true"
+            android:visibility="visible"
+            app:backgroundTint="@color/common_signin_btn_dark_text_default"
+            app:elevation="5dp"
+            app:fabSize="normal"
+            app:rippleColor="@color/common_signin_btn_dark_text_default"
+            app:srcCompat="@android:drawable/ic_input_add" />
+    </FrameLayout>
 
-</FrameLayout>
+</LinearLayout>
