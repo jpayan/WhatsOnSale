@@ -6,7 +6,7 @@
     <string name="password">Password</string>
     <string name="login">Log In</string>
     <string name="register">Register</string>
-    <string name="location">Location</string>
+    <string name="businessLocation">Location</string>
     <string name="sale">Sale</string>
     <string name="api_key">AIzaSyDnmPQaeUqn9biumaaqyp26YuM83Ezzojo</string>
     <string name="add_new_location">Add new location</string>

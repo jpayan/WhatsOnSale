@@ -31,10 +31,10 @@
             android:layout_margin="@dimen/fab_margin"
             android:clickable="true"
             android:visibility="visible"
-            app:backgroundTint="@color/common_signin_btn_dark_text_default"
+            app:backgroundTint="@color/common_google_signin_btn_text_dark_default"
             app:elevation="5dp"
             app:fabSize="normal"
-            app:rippleColor="@color/common_signin_btn_dark_text_default"
+            app:rippleColor="@color/common_google_signin_btn_text_dark_default"
             app:srcCompat="@android:drawable/ic_input_add" />
     </FrameLayout>
 
