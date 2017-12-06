@@ -1,5 +1,7 @@
 package mx.cetys.jorgepayan.whatsonsale.Models;
 
+import android.text.Editable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,9 +65,7 @@ public class Customer {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+    public void setAge(int age) {this.age = age;}
 
     public String getGender() {
         return gender;

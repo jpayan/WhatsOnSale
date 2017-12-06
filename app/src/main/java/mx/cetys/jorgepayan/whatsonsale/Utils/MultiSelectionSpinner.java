@@ -1,4 +1,4 @@
-package mx.cetys.jorgepayan.whatsonsale.Controllers.Activities;
+package mx.cetys.jorgepayan.whatsonsale.Utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -19,6 +19,7 @@ import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.BusinessHelper;
 public class BusinessHomeActivity extends AppCompatActivity {
 
     public static Business currentBusiness;
+    Boolean logout = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class BusinessHomeActivity extends AppCompatActivity {
         currentBusiness = businessHelper.getBusinessByEmail(email);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.navigation);
+                findViewById(R.id.navigation_business );
 
         bottomNavigationView.setOnNavigationItemSelectedListener
             (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -50,11 +51,12 @@ public class BusinessHomeActivity extends AppCompatActivity {
                             selectedFragment = BusinessSettingsFragment.newInstance();
                             break;
                     }
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_layout, selectedFragment);
-                    transaction.commit();
-                    return true;
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace( R.id.frame_layout, selectedFragment );
+                        transaction.commit();
+                        return true;
                 }
+
             });
 
         //Manually displaying the first fragment - one time only
@@ -67,4 +69,5 @@ public class BusinessHomeActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
 }

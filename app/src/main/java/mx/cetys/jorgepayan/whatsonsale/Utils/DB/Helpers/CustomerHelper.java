@@ -41,7 +41,20 @@ public class CustomerHelper {
     public Customer getCustomer(String customerId) {
         open();
         Cursor cursor = database.query(DBUtils.CUSTOMER_TABLE_NAME, CUSTOMER_TABLE_COLUMNS,
-                DBUtils.CUSTOMER_ID + " = " + customerId, null, null, null, null);
+                DBUtils.CUSTOMER_ID + " = '" + customerId+"'", null, null, null, null);
+
+        cursor.moveToFirst();
+        Customer customer = parsecustomer(cursor);
+        cursor.close();
+        close();
+
+        return customer;
+    }
+
+    public Customer getCustomerByEmail(String customerEmail) {
+        open();
+        Cursor cursor = database.query(DBUtils.CUSTOMER_TABLE_NAME, CUSTOMER_TABLE_COLUMNS,
+                DBUtils.CUSTOMER_USER_EMAIL + " = '" + customerEmail+  "'", null, null, null, null);
 
         cursor.moveToFirst();
         Customer customer = parsecustomer(cursor);
@@ -79,7 +92,7 @@ public class CustomerHelper {
         values.put(DBUtils.CUSTOMER_AGE, customer.getAge());
         values.put(DBUtils.CUSTOMER_GENDER, customer.getGender());
 
-        int response = database.update(DBUtils.CUSTOMER_TABLE_NAME, values, DBUtils.CUSTOMER_ID + " = " + customer.getCustomerId(),
+        int response = database.update(DBUtils.CUSTOMER_TABLE_NAME, values, DBUtils.CUSTOMER_ID + " = '" + customer.getCustomerId() + "'",
                 null);
         close();
         return response;

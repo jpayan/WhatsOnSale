@@ -51,6 +51,23 @@ public class SaleHelper {
         return sale;
     }
 
+    public ArrayList<Sale> getAllSales() {
+        ArrayList<Sale> saleArray = new ArrayList<>();
+        open();
+        Cursor cursor = database.query(DBUtils.SALE_TABLE_NAME, SALE_TABLE_COLUMNS,
+                null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            saleArray.add(parseSale(cursor));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        close();
+
+        return saleArray;
+    }
+
     public ArrayList<Sale> getBusinessSales(String businessId) {
         ArrayList<Sale> saleArray = new ArrayList<>();
 
@@ -95,13 +112,16 @@ public class SaleHelper {
         values.put(DBUtils.SALE_DESCRIPTION, Sale.getDescription());
         values.put(DBUtils.SALE_EXPIRATION_DATE, Sale.getExpirationDate());
 
-
-        database.update(DBUtils.SALE_TABLE_NAME, values, DBUtils.SALE_ID + " = " + Sale.getSaleId(),
+        open();
+        database.update(DBUtils.SALE_TABLE_NAME, values, DBUtils.SALE_ID + " = '" + Sale.getSaleId() + "'",
                 null);
+        close();
     }
 
     public void deleteSale(String SaleId) {
-        database.delete(DBUtils.SALE_TABLE_NAME, DBUtils.SALE_ID + " = " + SaleId, null);
+        open();
+        database.delete(DBUtils.SALE_TABLE_NAME, DBUtils.SALE_ID + " = '" + SaleId + "'", null);
+        close();
     }
 
     public void clearTable() {

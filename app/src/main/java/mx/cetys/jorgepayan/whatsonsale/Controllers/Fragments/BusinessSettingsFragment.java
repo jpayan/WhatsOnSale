@@ -2,6 +2,7 @@ package mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -29,6 +32,7 @@ public class BusinessSettingsFragment extends Fragment {
     EditText businessHqAddress;
     Button btn_changePassword;
     Button btn_updateBusiness;
+    ImageButton btn_logOut;
 
     BusinessHelper businessHelper;
     UserHelper userHelper;
@@ -49,6 +53,7 @@ public class BusinessSettingsFragment extends Fragment {
         View view = inflater.inflate( R.layout.fragment_business_settings, container, false);
         btn_changePassword = (Button) view.findViewById(R.id.btn_updatePasword);
         btn_updateBusiness = (Button) view.findViewById(R.id.btn_updateBusiness);
+        btn_logOut = (ImageButton) view.findViewById(R.id.btn_logout);
 
         businessHelper = new BusinessHelper(getContext().getApplicationContext());
 
@@ -141,6 +146,35 @@ public class BusinessSettingsFragment extends Fragment {
                 SimpleDialog successDialog =
                     new SimpleDialog("Changes where updates successfully", "Ok" );
                 successDialog.show( fm,"Alert Dialog Fragment");
+            }
+        });
+
+        btn_logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Log Out");
+                builder.setMessage("Are you sure you want to log out?");
+                builder.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            FragmentManager fm = getFragmentManager();
+                            Intent intent = new Intent(getContext().getApplicationContext(),
+                                MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(intent);
+                        }
+                    });
+                builder.setNegativeButton(android.R.string.cancel,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                builder.show();
             }
         });
         return view;
