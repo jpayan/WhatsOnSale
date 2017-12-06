@@ -35,9 +35,12 @@ import mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.CustomerReviewHomeF
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.CustomerSaleHomeFragment;
 import mx.cetys.jorgepayan.whatsonsale.Controllers.Fragments.CustomerSettingsFragment;
 import mx.cetys.jorgepayan.whatsonsale.Models.BusinessLocation;
+import mx.cetys.jorgepayan.whatsonsale.Models.Category;
 import mx.cetys.jorgepayan.whatsonsale.Models.Customer;
+import mx.cetys.jorgepayan.whatsonsale.Models.Sale;
 import mx.cetys.jorgepayan.whatsonsale.R;
 import mx.cetys.jorgepayan.whatsonsale.Services.GeofenceTrasitionService;
+import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.CustomerCategoryHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.CustomerHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.DB.Helpers.LocationHelper;
 import mx.cetys.jorgepayan.whatsonsale.Utils.Utils;
@@ -51,6 +54,8 @@ public class CustomerHomeActivity extends AppCompatActivity
     public static GoogleApiClient googleApiClient;
     private Location lastLocation;
     private LocationRequest locationRequest;
+
+    public static Context context;
 
     public static final String TAG = CustomerHomeActivity.class.getSimpleName();
     private static final float RADIUS = 500;
@@ -68,6 +73,10 @@ public class CustomerHomeActivity extends AppCompatActivity
     public static Customer currentCustomer;
     private CustomerHelper customerHelper;
 
+    public static ArrayList<Sale> validSales;
+    public static ArrayList<String> customerCategories;
+    public static ArrayList<String> salesViewed = new ArrayList<>();
+
     private BottomNavigationView bottomNavigationView;
 
     private LocationHelper locationHelper;
@@ -79,11 +88,22 @@ public class CustomerHomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_home);
 
+        context = getApplicationContext();
+
         customerHelper = new CustomerHelper(getApplicationContext());
         Intent fromMain = getIntent();
         String email = fromMain.getStringExtra(MainActivity.MAIN_EMAIL);
 
         currentCustomer = customerHelper.getCustomerByEmail(email);
+
+        customerCategories = new CustomerCategoryHelper(getApplicationContext())
+                .getCustomerCategoryByCustomerId(currentCustomer.getCustomerId());
+
+        Log.d("Customer Categories", customerCategories.toString());
+
+        validSales = Utils.getValidSales(customerCategories);
+
+        Log.d("Valid Sales", validSales.toString());
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.customer_navigation);
 
@@ -128,7 +148,9 @@ public class CustomerHomeActivity extends AppCompatActivity
     public void onConnected(@Nullable Bundle bundle) {
         Log.i(TAG, "onConnected()");
         askPermission();
+        clearGeofences();
         getLastKnownLocation();
+        Log.d(TAG, locations.toString());
         setGeofences(locations);
     }
 
@@ -183,6 +205,18 @@ public class CustomerHomeActivity extends AppCompatActivity
                     .build();
             Log.d(TAG, googleApiClient.toString());
         }
+    }
+
+    private void clearGeofences() {
+        Log.d(TAG, "clearGeofence()");
+        LocationServices.GeofencingApi.removeGeofences(googleApiClient,
+            createGeofencePendingIntent()).setResultCallback(new ResultCallback<Status>() {
+                @Override
+                public void onResult(@NonNull Status status) {
+                    Log.d(TAG, "Geofences removed.");
+                }
+            }
+        );
     }
 
     private void setBottomNavigationItemSelectedListener() {
@@ -310,7 +344,6 @@ public class CustomerHomeActivity extends AppCompatActivity
         for(BusinessLocation businessLocation : businessLocations) {
             startGeofence(businessLocation);
             Log.d(TAG, businessLocation.toString());
-
         }
     }
 
